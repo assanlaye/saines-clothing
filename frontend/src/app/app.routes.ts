@@ -6,5 +6,9 @@ export const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
   { path: '', redirectTo: '/login', pathMatch: 'full' },
-  // TODO: Add other routes here (Shop, Cart, Orders)
+  {
+    path: 'suits',
+    loadComponent: () => import('./features/shop/suit-list/suit-list.component').then(m => m.SuitListComponent)
+  },
+  // TODO: Add Cart and Orders routes
 ];
