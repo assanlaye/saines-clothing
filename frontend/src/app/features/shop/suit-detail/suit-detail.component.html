@@ -61,11 +61,22 @@
          </span>
       </div>
 
-      <button class="btn btn-primary btn-lg w-100" 
-              [disabled]="suit.availableQuantity === 0" 
-              (click)="addToCart()">
-        <i class="bi bi-cart-plus me-2"></i> {{ suit.availableQuantity > 0 ? 'Add to Cart' : 'Out of Stock' }}
-      </button>
+      <div class="row g-2">
+        <div class="col-6">
+          <button class="btn btn-primary w-100" 
+                  [disabled]="suit.availableQuantity === 0" 
+                  (click)="addToCart('Purchase')">
+            <i class="bi bi-bag-check me-2"></i> Buy Now
+          </button>
+        </div>
+        <div class="col-6">
+           <button class="btn btn-success w-100" 
+                  [disabled]="suit.availableQuantity === 0" 
+                  (click)="addToCart('Rental')">
+            <i class="bi bi-clock-history me-2"></i> Rent
+          </button>
+        </div>
+      </div>
     </div>
   </div>
 </div>

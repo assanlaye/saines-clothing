@@ -1,0 +1,51 @@
+<div class="container mt-5">
+  <h2 class="mb-4">My Orders</h2>
+
+  <div *ngIf="loading" class="text-center py-5">
+    <div class="spinner-border text-primary" role="status">
+      <span class="visually-hidden">Loading...</span>
+    </div>
+  </div>
+
+  <div *ngIf="error" class="alert alert-danger">
+    {{ error }}
+  </div>
+
+  <div *ngIf="!loading && orders.length === 0" class="alert alert-info">
+    You haven't placed any orders yet. <a routerLink="/suits" class="alert-link">Start Shopping</a>
+  </div>
+
+  <div *ngIf="!loading && orders.length > 0">
+    <div class="card mb-3 shadow-sm" *ngFor="let order of orders">
+      <div class="card-header bg-white d-flex justify-content-between align-items-center">
+        <div>
+          <strong>Order #{{ order.orderNumber }}</strong>
+          <span class="text-muted ms-2">{{ order.createdAt | date:'mediumDate' }}</span>
+        </div>
+        <span class="badge" 
+              [ngClass]="{
+                'bg-warning text-dark': order.status === 'Pending',
+                'bg-info': order.status === 'Processing',
+                'bg-success': order.status === 'Completed',
+                'bg-danger': order.status === 'Cancelled'
+              }">
+          {{ order.status }}
+        </span>
+      </div>
+      <div class="card-body">
+        <ul class="list-group list-group-flush mb-3">
+          <li class="list-group-item d-flex justify-content-between align-items-center" *ngFor="let item of order.items">
+            <div>
+              <span class="fw-bold">{{ item.suitId.name }}</span> <br>
+              <small class="text-muted">Type: {{ item.orderType }} | Qty: {{ item.quantity }}</small>
+            </div>
+            <span>\${{ item.pricePerUnit * item.quantity }}</span>
+          </li>
+        </ul>
+        <div class="d-flex justify-content-end">
+          <h5 class="mb-0">Total: \${{ order.totalAmount }}</h5>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -16,6 +16,7 @@ export class SuitDetailComponent implements OnInit {
   loading = true;
   error = '';
   selectedSize: string = '';
+  rentalDays: number = 3; // Default rental period
 
   constructor(
     private route: ActivatedRoute,
@@ -56,10 +57,10 @@ export class SuitDetailComponent implements OnInit {
     this.selectedSize = size;
   }
 
-  addToCart(): void {
+  addToCart(type: 'Purchase' | 'Rental'): void {
     if (this.suit) {
-      this.cartService.addToCart(this.suit, this.selectedSize);
-      alert('Added to cart!');
+      this.cartService.addToCart(this.suit, this.selectedSize, type, type === 'Rental' ? this.rentalDays : 0);
+      alert(`Added to cart as ${type}!`);
     }
   }
 

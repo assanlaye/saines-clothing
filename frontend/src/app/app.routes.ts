@@ -14,5 +14,16 @@ export const routes: Routes = [
     path: 'suits/:id',
     loadComponent: () => import('./features/shop/suit-detail/suit-detail.component').then(m => m.SuitDetailComponent)
   },
-  // TODO: Add Cart and Orders routes
+  {
+    path: 'cart',
+    loadComponent: () => import('./features/cart/cart-view/cart-view.component').then(m => m.CartViewComponent)
+  },
+  {
+    path: 'checkout',
+    loadComponent: () => import('./features/orders/checkout/checkout.component').then(m => m.CheckoutComponent)
+  },
+  {
+    path: 'my-orders',
+    loadComponent: () => import('./features/orders/order-history/order-history.component').then(m => m.OrderHistoryComponent)
+  },
 ];

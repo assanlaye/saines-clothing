@@ -2,12 +2,14 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 
 export interface CartItem {
-  id: string; // Suit ID
+  id: string;
   name: string;
   price: number;
   quantity: number;
   imageUrl?: string;
   size?: string;
+  orderType: 'Purchase' | 'Rental';
+  rentalDays?: number;
 }
 
 @Injectable({
@@ -37,9 +39,15 @@ export class CartService {
     return this.itemsSubject.value;
   }
 
-  addToCart(product: any, size: string = 'M') {
+  addToCart(product: any, size: string = 'M', orderType: 'Purchase' | 'Rental' = 'Purchase', rentalDays: number = 0) {
     const currentItems = this.getItems();
-    const existingItem = currentItems.find(item => item.id === product._id && item.size === size);
+    const price = orderType === 'Purchase' ? product.purchasePrice : product.rentalPricePerDay;
+
+    const existingItem = currentItems.find(item =>
+      item.id === product._id &&
+      item.size === size &&
+      item.orderType === orderType
+    );
 
     if (existingItem) {
       existingItem.quantity += 1;
@@ -48,10 +56,12 @@ export class CartService {
       const newItem: CartItem = {
         id: product._id,
         name: product.name,
-        price: product.price, // Or rentalPrice based on storage
+        price: price,
         quantity: 1,
         imageUrl: product.imageUrl,
-        size: size
+        size: size,
+        orderType: orderType,
+        rentalDays: rentalDays
       };
       this.saveCart([...currentItems, newItem]);
     }
