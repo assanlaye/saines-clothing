@@ -1,11 +1,13 @@
 import { Component } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { AlertService } from '../../../core/services/alert/alert.service';
 
 @Component({
   selector: 'app-alert',
-  imports: [],
-  templateUrl: './alert.html',
-  styleUrl: './alert.css',
+  standalone: true,
+  imports: [CommonModule],
+  templateUrl: './alert.html'
 })
-export class Alert {
-
+export class AlertComponent {
+  constructor(public alertService: AlertService) { }
 }
