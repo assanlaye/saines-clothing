@@ -16,11 +16,13 @@ export interface AuthResponse {
   user: User; // Adjust based on your actual backend response
 }
 
+import { environment } from '../../../../environments/environment';
+
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
-  private apiUrl = 'http://localhost:3000/api/auth'; // Adjust port if strictly 5000 or 3000
+  private apiUrl = `${environment.apiUrl}/auth`;
   private currentUserSubject = new BehaviorSubject<User | null>(null);
   public currentUser$ = this.currentUserSubject.asObservable();
 

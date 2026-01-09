@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { SuitService, Suit } from '../../../core/services/suit/suit.service';
 import { CartService } from '../../../core/services/cart/cart.service';
+import { AlertService } from '../../../core/services/alert/alert.service';
 import { ReactiveFormsModule, FormBuilder, FormGroup } from '@angular/forms';
 import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
 
@@ -32,6 +33,7 @@ export class SuitListComponent implements OnInit {
   constructor(
     private suitService: SuitService,
     private cartService: CartService,
+    private alertService: AlertService,
     private fb: FormBuilder
   ) {
     this.filterForm = this.fb.group({
@@ -93,8 +95,7 @@ export class SuitListComponent implements OnInit {
 
   addToCart(suit: Suit): void {
     this.cartService.addToCart(suit);
-    // Ideally show a toast notification here
-    alert('Added to cart!');
+    this.alertService.success('Added to cart!');
   }
 
   get pages(): number[] {

@@ -1,54 +1,80 @@
-<div class="container mt-5">
-  <div class="row justify-content-center">
-    <div class="col-md-6 col-lg-5">
-      <div class="card shadow-sm">
-        <div class="card-body p-4">
-          <h2 class="text-center mb-4">Login</h2>
+<div class="container-fluid vh-100 overflow-hidden">
+  <div class="row h-100">
+    <!-- Left Side: Visual/Brand -->
+    <div class="col-md-6 d-none d-md-flex bg-dark text-white align-items-center justify-content-center position-relative overflow-hidden">
+        <div class="position-absolute w-100 h-100" style="background: linear-gradient(45deg, #1a1a1a 0%, #2c3e50 100%); opacity: 0.9; z-index: 1;"></div>
+        <!-- You can add a background image here with object-fit: cover -->
+        <!-- <img src="assets/suit-bg.jpg" class="position-absolute w-100 h-100" style="object-fit: cover; z-index: 0;"> -->
+        
+        <div class="position-relative text-center p-5" style="z-index: 2;">
+            <h1 class="display-3 fw-bold mb-4">Saine Clothing</h1>
+            <p class="lead mb-4">Elegance is not standing out, but being remembered.</p>
+            <hr class="w-25 mx-auto border-light opacity-50">
+        </div>
+    </div>
 
-          <div *ngIf="error" class="alert alert-danger" role="alert">
-            {{ error }}
+    <!-- Right Side: Login Form -->
+    <div class="col-md-6 d-flex align-items-center justify-content-center bg-light">
+      <div class="w-100 p-5" style="max-width: 500px;">
+        <div class="text-center mb-5">
+            <h2 class="fw-bold text-dark">Welcome Back</h2>
+            <p class="text-muted">Please enter your details to sign in.</p>
+        </div>
+
+        <div *ngIf="error" class="alert alert-danger shadow-sm border-0 d-flex align-items-center" role="alert">
+          <i class="bi bi-exclamation-circle-fill me-2"></i>
+          <div>{{ error }}</div>
+        </div>
+
+        <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+          <div class="form-floating mb-3">
+            <input 
+              type="email" 
+              class="form-control border-0 shadow-sm" 
+              id="email" 
+              placeholder="name@example.com"
+              formControlName="email"
+              [ngClass]="{'is-invalid': loginForm.get('email')?.touched && loginForm.get('email')?.invalid}"
+            >
+            <label for="email" class="text-muted">Email address</label>
+            <div class="invalid-feedback">
+              Please provide a valid email.
+            </div>
           </div>
 
-          <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
-            <div class="mb-3">
-              <label for="email" class="form-label">Email address</label>
-              <input 
-                type="email" 
-                class="form-control" 
-                id="email" 
-                formControlName="email"
-                [ngClass]="{'is-invalid': loginForm.get('email')?.touched && loginForm.get('email')?.invalid}"
-              >
-              <div class="invalid-feedback">
-                Please provide a valid email.
-              </div>
+          <div class="form-floating mb-4">
+            <input 
+              type="password" 
+              class="form-control border-0 shadow-sm" 
+              id="password" 
+              placeholder="Password"
+              formControlName="password"
+              [ngClass]="{'is-invalid': loginForm.get('password')?.touched && loginForm.get('password')?.invalid}"
+            >
+            <label for="password" class="text-muted">Password</label>
+            <div class="invalid-feedback">
+              Password is required.
             </div>
-
-            <div class="mb-3">
-              <label for="password" class="form-label">Password</label>
-              <input 
-                type="password" 
-                class="form-control" 
-                id="password" 
-                formControlName="password"
-                [ngClass]="{'is-invalid': loginForm.get('password')?.touched && loginForm.get('password')?.invalid}"
-              >
-              <div class="invalid-feedback">
-                Password is required.
-              </div>
-            </div>
-
-            <div class="d-grid gap-2">
-              <button type="submit" class="btn btn-primary" [disabled]="loading || loginForm.invalid">
-                <span *ngIf="loading" class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
-                {{ loading ? 'Logging in...' : 'Login' }}
-              </button>
-            </div>
-          </form>
-          
-          <div class="mt-3 text-center">
-            <p>Don't have an account? <a routerLink="/register">Register here</a></p>
           </div>
+
+          <div class="d-flex justify-content-between align-items-center mb-4">
+              <div class="form-check">
+                  <input class="form-check-input" type="checkbox" id="rememberMe">
+                  <label class="form-check-label text-muted small" for="rememberMe">Remember me</label>
+              </div>
+              <a href="#" class="text-decoration-none small text-primary fw-semibold">Forgot Password?</a>
+          </div>
+
+          <div class="d-grid gap-2">
+            <button type="submit" class="btn btn-dark btn-lg py-3 shadow-sm hover-elevate transition-all" [disabled]="loading || loginForm.invalid">
+              <span *ngIf="loading" class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
+              {{ loading ? 'Signing In...' : 'Sign In' }}
+            </button>
+          </div>
+        </form>
+        
+        <div class="mt-5 text-center text-muted">
+          <p>Don't have an account? <a routerLink="/register" class="text-primary text-decoration-none fw-semibold">Create account</a></p>
         </div>
       </div>
     </div>

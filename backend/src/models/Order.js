@@ -1,9 +1,13 @@
 const mongoose = require('mongoose');
 
 const orderItemSchema = new mongoose.Schema({
-  suitId: {
+  product: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'Suit',
+    ref: 'Product',
+    required: true
+  },
+  name: {
+    type: String,
     required: true
   },
   quantity: {
@@ -12,24 +16,20 @@ const orderItemSchema = new mongoose.Schema({
     min: 1,
     default: 1
   },
-  orderType: {
-    type: String,
-    enum: ['Purchase', 'Rental'],
-    required: true
-  },
-  rentalDuration: {
-    type: Number, // In days
-    default: 0
-  },
-  rentalStartDate: {
-    type: Date
-  },
-  rentalEndDate: {
-    type: Date
-  },
-  pricePerUnit: {
+  price: {
     type: Number,
     required: true
+  },
+  size: {
+    type: String,
+    required: true
+  },
+  color: {
+    type: String,
+    required: true
+  },
+  image: {
+    type: String
   }
 });
 
@@ -51,7 +51,7 @@ const orderSchema = new mongoose.Schema({
   },
   status: {
     type: String,
-    enum: ['Pending', 'Confirmed', 'Processing', 'Completed', 'Cancelled', 'Returned', 'Overdue'],
+    enum: ['Pending', 'Processing', 'Shipped', 'Delivered', 'Cancelled'],
     default: 'Pending'
   },
   paymentStatus: {
