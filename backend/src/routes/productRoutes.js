@@ -7,15 +7,16 @@ const {
   updateProduct,
   deleteProduct
 } = require('../controllers/productController');
-const { protect, authorize } = require('../middleware/authMiddleware');
+const { protect } = require('../middleware/auth');
+const { authorize } = require('../middleware/roleAuth');
 
 router.route('/')
   .get(getAllProducts)
-  .post(protect, authorize('ADMIN'), createProduct);
+  .post(protect, authorize('admin'), createProduct);
 
 router.route('/:id')
   .get(getProductById)
-  .put(protect, authorize('ADMIN'), updateProduct)
-  .delete(protect, authorize('ADMIN'), deleteProduct);
+  .put(protect, authorize('admin'), updateProduct)
+  .delete(protect, authorize('admin'), deleteProduct);
 
 module.exports = router;

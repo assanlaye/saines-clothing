@@ -36,4 +36,8 @@ export class OrderService {
   getMyOrders(): Observable<{ success: boolean, count: number, data: any[] }> {
     return this.apiService.get(this.endpoint);
   }
+
+  updateOrderStatus(id: string, status: string): Observable<any> {
+    return this.apiService.put(`${this.endpoint}/${id}`, { status });
+  }
 }

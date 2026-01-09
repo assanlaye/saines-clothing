@@ -40,7 +40,8 @@
                    <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
                  </button>
                  <!-- Dropdown -->
-                 <div class="absolute right-0 mt-2 w-48 bg-white border border-gray-100 shadow-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all py-2">
+                  <div class="absolute right-0 mt-2 w-48 bg-white border border-gray-100 shadow-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all py-2">
+                    <a *ngIf="user.role === 'admin'" routerLink="/admin" class="block px-4 py-2 text-sm text-gray-900 font-bold hover:bg-gray-50 uppercase tracking-wider">Dashboard</a>
                     <a routerLink="/my-orders" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 uppercase tracking-wider font-medium">My Orders</a>
                     <hr class="my-1 border-gray-100">
                     <button (click)="logout()" class="w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-gray-50 uppercase tracking-wider font-bold">Logout</button>

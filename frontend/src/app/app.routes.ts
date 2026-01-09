@@ -29,5 +29,20 @@ export const routes: Routes = [
     loadComponent: () => import('./features/orders/order-history/order-history.component').then(m => m.OrderHistoryComponent),
     canActivate: [AuthGuard]
   },
+  {
+    path: 'admin',
+    loadComponent: () => import('./features/admin/admin-dashboard/admin-dashboard.component').then(m => m.AdminDashboardComponent),
+    canActivate: [AdminGuard]
+  },
+  {
+    path: 'admin/products',
+    loadComponent: () => import('./features/admin/product-management/product-management.component').then(m => m.ProductManagementComponent),
+    canActivate: [AdminGuard]
+  },
+  {
+    path: 'admin/orders',
+    loadComponent: () => import('./features/admin/order-management/order-management.component').then(m => m.OrderManagementComponent),
+    canActivate: [AdminGuard]
+  },
   { path: '', redirectTo: '/products', pathMatch: 'full' },
 ];

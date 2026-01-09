@@ -11,6 +11,7 @@ import { AuthModule } from './features/auth/auth.module';
 import { ShopModule } from './features/shop/shop.module';
 import { CartModule } from './features/cart/cart.module';
 import { OrdersModule } from './features/orders/orders.module';
+import { AdminModule } from './features/admin/admin.module';
 
 @NgModule({
   declarations: [
@@ -25,7 +26,8 @@ import { OrdersModule } from './features/orders/orders.module';
     AuthModule,
     ShopModule,
     CartModule,
-    OrdersModule
+    OrdersModule,
+    AdminModule
   ],
   providers: [
     provideZoneChangeDetection({ eventCoalescing: true }),

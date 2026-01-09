@@ -1,0 +1,42 @@
+<div class="bg-white min-h-screen">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+    <div class="mb-12">
+      <h1 class="text-3xl font-extrabold tracking-tight text-gray-900 uppercase tracking-widest">Admin Dashboard</h1>
+      <p class="mt-2 text-sm text-gray-500 uppercase tracking-tighter">Welcome back, Admin. Manage your store operations here.</p>
+    </div>
+
+    <div class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+      <!-- Products card -->
+      <div class="bg-gray-50 p-8 border border-gray-100 hover:border-gray-900 transition-all group">
+         <div class="flex items-center justify-between mb-8">
+            <svg class="w-8 h-8 text-gray-400 group-hover:text-gray-900 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"></path></svg>
+            <span class="text-xs font-bold text-gray-400 uppercase tracking-widest">Store Inventory</span>
+         </div>
+         <h3 class="text-xl font-bold text-gray-900 uppercase tracking-widest mb-4">Product Catalog</h3>
+         <p class="text-sm text-gray-500 mb-8">Add, edit, or remove products from your store collection.</p>
+         <a routerLink="/admin/products" class="inline-block bg-gray-900 text-white px-6 py-3 text-xs font-black uppercase tracking-widest hover:bg-gray-800 transition-all">Manage Products</a>
+      </div>
+
+      <!-- Orders card -->
+      <div class="bg-gray-50 p-8 border border-gray-100 hover:border-gray-900 transition-all group">
+         <div class="flex items-center justify-between mb-8">
+            <svg class="w-8 h-8 text-gray-400 group-hover:text-gray-900 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path></svg>
+            <span class="text-xs font-bold text-gray-400 uppercase tracking-widest">Sales & Logistics</span>
+         </div>
+         <h3 class="text-xl font-bold text-gray-900 uppercase tracking-widest mb-4">Order Management</h3>
+         <p class="text-sm text-gray-500 mb-8">Track and update the status of all customer orders.</p>
+         <a routerLink="/admin/orders" class="inline-block bg-gray-900 text-white px-6 py-3 text-xs font-black uppercase tracking-widest hover:bg-gray-800 transition-all">View All Orders</a>
+      </div>
+
+      <!-- Analytics card (Placeholder) -->
+      <div class="bg-gray-50 p-8 border border-gray-100 border-dashed opacity-60">
+         <div class="flex items-center justify-between mb-8">
+            <svg class="w-8 h-8 text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path></svg>
+            <span class="text-xs font-bold text-gray-300 uppercase tracking-widest">Insights</span>
+         </div>
+         <h3 class="text-xl font-bold text-gray-300 uppercase tracking-widest mb-4">Analytics</h3>
+         <p class="text-sm text-gray-300 mb-8">Overview of your store performance (Coming Soon).</p>
+      </div>
+    </div>
+  </div>
+</div>

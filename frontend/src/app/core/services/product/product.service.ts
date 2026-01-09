@@ -27,4 +27,12 @@ export class ProductService {
   getProductById(id: string): Observable<{ success: boolean, data: Product }> {
     return this.apiService.get(`${this.endpoint}/${id}`);
   }
+
+  createProduct(productData: any): Observable<any> {
+    return this.apiService.post(this.endpoint, productData);
+  }
+
+  deleteProduct(id: string): Observable<any> {
+    return this.apiService.delete(`${this.endpoint}/${id}`);
+  }
 }
