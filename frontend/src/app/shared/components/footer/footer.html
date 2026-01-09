@@ -1,20 +1,51 @@
-<footer class="bg-dark text-light py-4 mt-auto">
-  <div class="container">
-    <div class="row">
-      <div class="col-md-6">
-        <h5>Saine Clothing</h5>
-        <p>Premium Suit Rentals & Sales.</p>
+<footer class="bg-white border-t border-gray-100 pt-24 pb-12 mt-24">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="grid grid-cols-1 md:grid-cols-4 gap-12">
+      <!-- Brand -->
+      <div class="col-span-1 md:col-span-2">
+        <a routerLink="/" class="text-2xl font-black tracking-tighter text-gray-900 uppercase">
+          Saine<span class="text-gray-400">Clothing</span>
+        </a>
+        <p class="mt-6 text-base text-gray-500 max-w-sm leading-relaxed">
+          The definitive destination for modern elegance. We curate the finest fabrics and silhouettes for your most significant moments.
+        </p>
+        <div class="mt-8 flex space-x-6">
+           <!-- Social Icons Mockup -->
+           <div class="w-5 h-5 bg-gray-200 rounded-full"></div>
+           <div class="w-5 h-5 bg-gray-200 rounded-full"></div>
+           <div class="w-5 h-5 bg-gray-200 rounded-full"></div>
+        </div>
       </div>
-      <div class="col-md-6 text-md-end">
-        <ul class="list-inline">
-          <li class="list-inline-item"><a href="#" class="text-light">About Us</a></li>
-          <li class="list-inline-item"><a href="#" class="text-light">Contact</a></li>
-          <li class="list-inline-item"><a href="#" class="text-light">Terms</a></li>
+
+      <!-- Links -->
+      <div>
+        <h3 class="text-sm font-bold text-gray-900 uppercase tracking-widest mb-6">Experience</h3>
+        <ul class="space-y-4">
+          <li><a routerLink="/products" class="text-sm text-gray-500 hover:text-gray-900 transition-colors">The Collection</a></li>
+          <li><a routerLink="/suits" class="text-sm text-gray-500 hover:text-gray-900 transition-colors">Suit Rentals</a></li>
+          <li><a href="#" class="text-sm text-gray-500 hover:text-gray-900 transition-colors">Bespoke Service</a></li>
+          <li><a href="#" class="text-sm text-gray-500 hover:text-gray-900 transition-colors">Gift Cards</a></li>
+        </ul>
+      </div>
+
+      <!-- Links -->
+      <div>
+        <h3 class="text-sm font-bold text-gray-900 uppercase tracking-widest mb-6">Assistance</h3>
+        <ul class="space-y-4">
+          <li><a href="#" class="text-sm text-gray-500 hover:text-gray-900 transition-colors">Client Services</a></li>
+          <li><a href="#" class="text-sm text-gray-500 hover:text-gray-900 transition-colors">Shipping & Returns</a></li>
+          <li><a href="#" class="text-sm text-gray-500 hover:text-gray-900 transition-colors">Care Guide</a></li>
+          <li><a href="#" class="text-sm text-gray-500 hover:text-gray-900 transition-colors">Legal & Privacy</a></li>
         </ul>
       </div>
     </div>
-    <div class="text-center mt-3 border-top pt-3 border-secondary">
-      <small>&copy; 2026 Saine Clothing. All rights reserved.</small>
+
+    <div class="mt-24 pt-8 border-t border-gray-100 flex flex-col md:flex-row justify-between items-center gap-4">
+      <p class="text-xs text-gray-400 font-medium uppercase tracking-widest">&copy; 2026 Saine Clothing. All rights reserved.</p>
+      <div class="flex gap-8">
+        <span class="text-[10px] font-bold text-gray-300 uppercase tracking-widest">Global Shipping Available</span>
+        <span class="text-[10px] font-bold text-gray-300 uppercase tracking-widest">Secure Checkout</span>
+      </div>
     </div>
   </div>
 </footer>

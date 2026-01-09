@@ -1,0 +1,135 @@
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+  <div class="text-center mb-12">
+    <h1 class="text-4xl font-extrabold tracking-tight text-gray-900">Our Collection</h1>
+    <p class="mt-4 max-w-2xl mx-auto text-lg text-gray-500">
+      Discover pieces designed with purpose, for a life of intention.
+    </p>
+  </div>
+
+  <div class="flex flex-col md:flex-row gap-8 mb-8">
+    <!-- Filters Side -->
+    <aside class="w-full md:w-1/4 lg:w-1/5">
+      <h2 class="text-lg font-semibold mb-6 border-b pb-2">Filters</h2>
+      <form [formGroup]="filterForm" class="space-y-8">
+        <div>
+          <label class="block text-sm font-medium text-gray-700 mb-2 uppercase tracking-wider">Search</label>
+          <input
+            type="text"
+            formControlName="search"
+            placeholder="Search products..."
+            class="w-full bg-white px-4 py-2 border border-gray-300 focus:outline-none focus:ring-1 focus:ring-gray-900 focus:border-gray-900 transition-all"
+          />
+        </div>
+
+        <div>
+           <label class="block text-sm font-medium text-gray-700 mb-2 uppercase tracking-wider">Categories</label>
+           <div class="space-y-3">
+             <div *ngFor="let cat of categories" class="flex items-center">
+                <input
+                  type="radio"
+                  [id]="cat"
+                  [value]="cat"
+                  formControlName="category"
+                  class="h-4 w-4 text-gray-900 border-gray-300 focus:ring-gray-900"
+                />
+                <label [for]="cat" class="ml-3 text-sm text-gray-600">{{ cat }}</label>
+             </div>
+             <div class="flex items-center">
+                <input
+                  type="radio"
+                  id="all"
+                  value=""
+                  formControlName="category"
+                  class="h-4 w-4 text-gray-900 border-gray-300 focus:ring-gray-900"
+                />
+                <label for="all" class="ml-3 text-sm text-gray-600">All</label>
+             </div>
+           </div>
+        </div>
+
+        <div class="pt-4">
+           <label class="block text-sm font-medium text-gray-700 mb-2 uppercase tracking-wider">Price Range</label>
+           <div class="flex items-center gap-2">
+              <input type="number" formControlName="minPrice" placeholder="Min" class="w-full px-2 py-1 border text-sm">
+              <span>-</span>
+              <input type="number" formControlName="maxPrice" placeholder="Max" class="w-full px-2 py-1 border text-sm">
+           </div>
+        </div>
+      </form>
+    </aside>
+
+    <!-- Product Grid -->
+    <main class="flex-1">
+      <!-- Loading -->
+      <div *ngIf="loading" class="flex justify-center items-center h-64">
+        <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-gray-900"></div>
+      </div>
+
+      <!-- Error -->
+      <div *ngIf="error" class="bg-red-50 text-red-700 p-4 mb-6">
+        {{ error }}
+      </div>
+
+      <!-- Content -->
+      <div *ngIf="!loading && !error">
+        <div *ngIf="products.length === 0" class="text-center py-24 border-2 border-dashed border-gray-200">
+           <h3 class="text-xl font-medium text-gray-900">No products found</h3>
+           <p class="mt-2 text-gray-500">Try adjusting your filters or search terms.</p>
+        </div>
+
+        <div *ngIf="products.length > 0" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-x-6 gap-y-12">
+          <div *ngFor="let product of products" class="group relative flex flex-col">
+            <div class="aspect-w-3 aspect-h-4 bg-gray-200 overflow-hidden relative">
+              <img [src]="product.images[0]?.url" [alt]="product.name" class="w-full h-[400px] object-center object-cover group-hover:opacity-75 transition-opacity">
+              <button 
+                (click)="addToCart(product)"
+                class="absolute bottom-4 left-4 right-4 bg-white text-gray-900 py-3 text-sm font-bold uppercase tracking-widest opacity-0 group-hover:opacity-100 transition-all hover:bg-gray-900 hover:text-white transform translate-y-2 group-hover:translate-y-0"
+              >
+                Quick Add
+              </button>
+            </div>
+            <div class="mt-4 flex flex-col items-center text-center">
+              <h3 class="text-sm text-gray-700 font-medium">
+                <a [routerLink]="['/products', product._id]">
+                  <span aria-hidden="true" class="absolute inset-0"></span>
+                  {{ product.name }}
+                </a>
+              </h3>
+              <p class="mt-1 text-sm text-gray-500 uppercase tracking-tighter">{{ product.type }}</p>
+              <p class="mt-2 text-lg font-bold text-gray-900">D{{ product.price | number:'1.2-2' }}</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Pagination -->
+        <div *ngIf="totalPages > 1" class="mt-16 flex justify-center">
+          <nav class="flex items-center gap-1">
+            <button 
+              (click)="onPageChange(currentPage - 1)" 
+              [disabled]="currentPage === 1"
+              class="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 hover:bg-gray-50 disabled:opacity-50"
+            >
+              Prev
+            </button>
+            <button 
+              *ngFor="let page of pages" 
+              (click)="onPageChange(page)"
+              [class.bg-gray-900]="page === currentPage"
+              [class.text-white]="page === currentPage"
+              class="px-4 py-2 text-sm font-medium border border-gray-300 hover:bg-gray-50"
+            >
+              {{ page }}
+            </button>
+            <button 
+              (click)="onPageChange(currentPage + 1)" 
+              [disabled]="currentPage === totalPages"
+              class="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 hover:bg-gray-50 disabled:opacity-50"
+            >
+              Next
+            </button>
+          </nav>
+        </div>
+      </div>
+    </main>
+  </div>
+</div>

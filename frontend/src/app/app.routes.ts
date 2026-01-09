@@ -5,7 +5,6 @@ import { RegisterComponent } from './features/auth/register/register.component';
 export const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
-  { path: '', redirectTo: '/login', pathMatch: 'full' },
   {
     path: 'suits',
     loadComponent: () => import('./features/shop/suit-list/suit-list.component').then(m => m.SuitListComponent)
@@ -13,6 +12,14 @@ export const routes: Routes = [
   {
     path: 'suits/:id',
     loadComponent: () => import('./features/shop/suit-detail/suit-detail.component').then(m => m.SuitDetailComponent)
+  },
+  {
+    path: 'products',
+    loadComponent: () => import('./features/shop/product-list/product-list.component').then(m => m.ProductListComponent)
+  },
+  {
+    path: 'products/:id',
+    loadComponent: () => import('./features/shop/product-detail/product-detail.component').then(m => m.ProductDetailComponent)
   },
   {
     path: 'cart',
@@ -26,4 +33,5 @@ export const routes: Routes = [
     path: 'my-orders',
     loadComponent: () => import('./features/orders/order-history/order-history.component').then(m => m.OrderHistoryComponent)
   },
+  { path: '', redirectTo: '/products', pathMatch: 'full' },
 ];
