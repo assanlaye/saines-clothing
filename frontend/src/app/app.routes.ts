@@ -1,6 +1,8 @@
 import { Routes } from '@angular/router';
 import { LoginComponent } from './features/auth/login/login.component';
 import { RegisterComponent } from './features/auth/register/register.component';
+import { AuthGuard } from './core/guards/auth.guard';
+import { AdminGuard } from './core/guards/admin.guard';
 
 export const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -19,11 +21,13 @@ export const routes: Routes = [
   },
   {
     path: 'checkout',
-    loadComponent: () => import('./features/orders/checkout/checkout.component').then(m => m.CheckoutComponent)
+    loadComponent: () => import('./features/orders/checkout/checkout.component').then(m => m.CheckoutComponent),
+    canActivate: [AuthGuard]
   },
   {
     path: 'my-orders',
-    loadComponent: () => import('./features/orders/order-history/order-history.component').then(m => m.OrderHistoryComponent)
+    loadComponent: () => import('./features/orders/order-history/order-history.component').then(m => m.OrderHistoryComponent),
+    canActivate: [AuthGuard]
   },
   { path: '', redirectTo: '/products', pathMatch: 'full' },
 ];

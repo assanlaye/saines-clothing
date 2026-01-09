@@ -5,8 +5,6 @@ import { CartService, CartItem } from '../../../core/services/cart/cart.service'
 
 @Component({
   selector: 'app-cart-view',
-  standalone: true,
-  imports: [CommonModule, RouterModule],
   templateUrl: './cart-view.component.html'
 })
 export class CartViewComponent implements OnInit {

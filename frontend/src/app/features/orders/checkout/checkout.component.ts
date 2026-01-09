@@ -7,8 +7,6 @@ import { OrderService, OrderRequest, OrderItem } from '../../../core/services/or
 
 @Component({
   selector: 'app-checkout',
-  standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, RouterModule],
   templateUrl: './checkout.component.html'
 })
 export class CheckoutComponent implements OnInit {

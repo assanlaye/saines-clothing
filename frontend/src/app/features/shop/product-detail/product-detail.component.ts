@@ -8,8 +8,6 @@ import { Product } from '../../../core/models/product.model';
 
 @Component({
   selector: 'app-product-detail',
-  standalone: true,
-  imports: [CommonModule, RouterModule],
   templateUrl: './product-detail.component.html'
 })
 export class ProductDetailComponent implements OnInit {

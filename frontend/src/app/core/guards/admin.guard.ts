@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { CanActivate, Router } from '@angular/router';
-import { Observable, of } from 'rxjs';
+import { Observable } from 'rxjs';
 import { map, take } from 'rxjs/operators';
 import { AuthService } from '../services/auth/auth.service';
 import { AlertService } from '../services/alert/alert.service';
@@ -8,7 +8,7 @@ import { AlertService } from '../services/alert/alert.service';
 @Injectable({
   providedIn: 'root'
 })
-export class AuthGuard implements CanActivate {
+export class AdminGuard implements CanActivate {
 
   constructor(
     private authService: AuthService,
@@ -16,23 +16,15 @@ export class AuthGuard implements CanActivate {
     private alertService: AlertService
   ) { }
 
-  canActivate(): Observable<boolean> | boolean {
-    const token = this.authService.getToken();
-
-    if (!token) {
-      this.alertService.info('Please login to access this page');
-      this.router.navigate(['/login']);
-      return false;
-    }
-
+  canActivate(): Observable<boolean> {
     return this.authService.currentUser$.pipe(
       take(1),
       map(user => {
-        if (user) {
+        if (user && user.role === 'admin') {
           return true;
         } else {
-          this.alertService.error('Session expired. Please login again');
-          this.router.navigate(['/login']);
+          this.alertService.error('Access Denied. Admin privileges required.');
+          this.router.navigate(['/']);
           return false;
         }
       })

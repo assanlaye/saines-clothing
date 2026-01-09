@@ -9,8 +9,6 @@ import { Product } from '../../../core/models/product.model';
 
 @Component({
   selector: 'app-product-list',
-  standalone: true,
-  imports: [CommonModule, RouterModule, ReactiveFormsModule],
   templateUrl: './product-list.component.html'
 })
 export class ProductListComponent implements OnInit {

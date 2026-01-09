@@ -5,8 +5,6 @@ import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-order-history',
-  standalone: true,
-  imports: [CommonModule, RouterModule],
   templateUrl: './order-history.component.html'
 })
 export class OrderHistoryComponent implements OnInit {
