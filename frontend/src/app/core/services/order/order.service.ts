@@ -3,11 +3,10 @@ import { Observable } from 'rxjs';
 import { ApiService } from '../api/api.service';
 
 export interface OrderItem {
-  suitId: string;
+  productId: string;
   quantity: number;
-  orderType: 'Purchase' | 'Rental';
-  pricePerUnit: number;
-  rentalDays?: number;
+  size: string;
+  price: number;
 }
 
 export interface DeliveryAddress {
@@ -34,7 +33,7 @@ export class OrderService {
     return this.apiService.post(this.endpoint, orderData);
   }
 
-  getMyOrders(): Observable<any> {
-    return this.apiService.get(`${this.endpoint}/myorders`);
+  getMyOrders(): Observable<{ success: boolean, count: number, data: any[] }> {
+    return this.apiService.get(this.endpoint);
   }
 }

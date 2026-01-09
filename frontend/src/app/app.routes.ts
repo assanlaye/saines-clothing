@@ -6,14 +6,6 @@ export const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
   {
-    path: 'suits',
-    loadComponent: () => import('./features/shop/suit-list/suit-list.component').then(m => m.SuitListComponent)
-  },
-  {
-    path: 'suits/:id',
-    loadComponent: () => import('./features/shop/suit-detail/suit-detail.component').then(m => m.SuitDetailComponent)
-  },
-  {
     path: 'products',
     loadComponent: () => import('./features/shop/product-list/product-list.component').then(m => m.ProductListComponent)
   },

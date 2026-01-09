@@ -49,11 +49,10 @@ export class CheckoutComponent implements OnInit {
 
     const cartItems = this.cartService.getItems();
     const orderItems: OrderItem[] = cartItems.map(item => ({
-      suitId: item.id,
+      productId: item.id,
       quantity: item.quantity,
-      orderType: item.orderType,
-      pricePerUnit: item.price,
-      rentalDays: item.rentalDays // Optional, depends on backend logic handling
+      size: item.size,
+      price: item.price
     }));
 
     const orderPayload: OrderRequest = {
@@ -67,7 +66,7 @@ export class CheckoutComponent implements OnInit {
         this.loading = false;
         this.cartService.clearCart();
         alert('Order placed successfully!');
-        this.router.navigate(['/suits']); // Ideally navigate to an Order Success or History page
+        this.router.navigate(['/my-orders']);
       },
       error: (err) => {
         this.loading = false;

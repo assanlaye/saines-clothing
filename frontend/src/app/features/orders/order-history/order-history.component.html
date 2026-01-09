@@ -1,50 +1,76 @@
-<div class="container mt-5">
-  <h2 class="mb-4">My Orders</h2>
-
-  <div *ngIf="loading" class="text-center py-5">
-    <div class="spinner-border text-primary" role="status">
-      <span class="visually-hidden">Loading...</span>
-    </div>
-  </div>
-
-  <div *ngIf="error" class="alert alert-danger">
-    {{ error }}
-  </div>
-
-  <div *ngIf="!loading && orders.length === 0" class="alert alert-info">
-    You haven't placed any orders yet. <a routerLink="/suits" class="alert-link">Start Shopping</a>
-  </div>
-
-  <div *ngIf="!loading && orders.length > 0">
-    <div class="card mb-3 shadow-sm" *ngFor="let order of orders">
-      <div class="card-header bg-white d-flex justify-content-between align-items-center">
-        <div>
-          <strong>Order #{{ order.orderNumber }}</strong>
-          <span class="text-muted ms-2">{{ order.createdAt | date:'mediumDate' }}</span>
-        </div>
-        <span class="badge" 
-              [ngClass]="{
-                'bg-warning text-dark': order.status === 'Pending',
-                'bg-info': order.status === 'Processing',
-                'bg-success': order.status === 'Completed',
-                'bg-danger': order.status === 'Cancelled'
-              }">
-          {{ order.status }}
-        </span>
+<div class="bg-white min-h-screen">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+    <div class="flex items-center justify-between mb-12 border-b border-gray-100 pb-8">
+      <div>
+        <h1 class="text-3xl font-extrabold tracking-tight text-gray-900 uppercase tracking-widest">Order History</h1>
+        <p class="mt-2 text-sm text-gray-500">Check the status of recent orders, manage returns, and download invoices.</p>
       </div>
-      <div class="card-body">
-        <ul class="list-group list-group-flush mb-3">
-          <li class="list-group-item d-flex justify-content-between align-items-center" *ngFor="let item of order.items">
-            <div>
-              <span class="fw-bold">{{ item.suitId.name }}</span> <br>
-              <small class="text-muted">Type: {{ item.orderType }} | Qty: {{ item.quantity }}</small>
-            </div>
-            <span>\${{ item.pricePerUnit * item.quantity }}</span>
-          </li>
-        </ul>
-        <div class="d-flex justify-content-end">
-          <h5 class="mb-0">Total: \${{ order.totalAmount }}</h5>
+    </div>
+
+    <div *ngIf="loading" class="flex justify-center py-24">
+       <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-gray-900"></div>
+    </div>
+
+    <div *ngIf="error" class="bg-red-50 text-red-700 p-4 rounded-md mb-8 font-bold uppercase tracking-widest text-xs">
+      {{ error }}
+    </div>
+
+    <div *ngIf="!loading && orders.length === 0" class="text-center py-24 border-2 border-dashed border-gray-100 italic">
+       <p class="text-gray-400 uppercase tracking-widest">You have no previous orders.</p>
+       <a routerLink="/products" class="mt-8 inline-block text-sm font-bold text-gray-900 underline uppercase tracking-widest">Start your first collection</a>
+    </div>
+
+    <div *ngIf="!loading && orders.length > 0" class="space-y-12">
+      <div *ngFor="let order of orders" class="bg-white border border-gray-200 overflow-hidden">
+        <!-- Order Header -->
+        <div class="bg-gray-50 px-6 py-6 sm:flex sm:items-center sm:justify-between">
+           <div class="flex-1 grid grid-cols-2 gap-x-6 text-xs sm:grid-cols-4 sm:gap-x-12 uppercase tracking-[0.15em] font-bold">
+              <div>
+                <dt class="text-gray-400 mb-1">Order Number</dt>
+                <dd class="text-gray-900">{{ order.orderNumber }}</dd>
+              </div>
+              <div>
+                <dt class="text-gray-400 mb-1">Date Placed</dt>
+                <dd class="text-gray-900">{{ order.createdAt | date:'MMM dd, yyyy' }}</dd>
+              </div>
+              <div>
+                <dt class="text-gray-400 mb-1">Total Amount</dt>
+                <dd class="text-gray-900">D{{ order.totalAmount | number:'1.2-2' }}</dd>
+              </div>
+              <div>
+                <dt class="text-gray-400 mb-1">Status</dt>
+                <dd [ngClass]="{
+                   'text-yellow-600': order.status === 'Pending',
+                   'text-blue-600': order.status === 'Processing',
+                   'text-green-600': order.status === 'Delivered',
+                   'text-red-600': order.status === 'Cancelled'
+                }">{{ order.status }}</dd>
+              </div>
+           </div>
+           <div class="mt-6 sm:mt-0">
+              <button class="bg-white border border-gray-200 px-4 py-2 text-[10px] font-black uppercase tracking-widest hover:bg-gray-50 transition-all">View Invoice</button>
+           </div>
         </div>
+
+        <!-- Items -->
+        <ul role="list" class="divide-y divide-gray-100 px-6">
+           <li *ngFor="let item of order.items" class="py-8 flex items-center">
+              <img [src]="item.image || item.product?.images[0]?.url" class="w-20 h-28 object-cover border border-gray-100 mr-8">
+              <div class="flex-1 text-sm">
+                 <div class="flex justify-between items-start">
+                    <div>
+                       <h3 class="font-bold text-gray-900 uppercase tracking-widest">{{ item.name }}</h3>
+                       <p class="mt-2 text-gray-500 uppercase tracking-tighter">Qty {{ item.quantity }} | Size {{ item.size }}</p>
+                    </div>
+                    <p class="font-bold text-gray-900 tracking-wider">D{{ item.price | number:'1.2-2' }}</p>
+                 </div>
+                 <div class="mt-4 flex gap-4">
+                    <a [routerLink]="['/products', item.product?._id]" class="text-[10px] font-bold text-gray-400 hover:text-gray-900 transition-colors uppercase tracking-widest underline">View Product</a>
+                    <button class="text-[10px] font-bold text-gray-400 hover:text-gray-900 transition-colors uppercase tracking-widest underline">Write Review</button>
+                 </div>
+              </div>
+           </li>
+        </ul>
       </div>
     </div>
   </div>

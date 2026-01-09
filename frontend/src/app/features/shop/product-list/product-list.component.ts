@@ -86,14 +86,7 @@ export class ProductListComponent implements OnInit {
   }
 
   addToCart(product: Product): void {
-    // Adapter for legacy cart service which expects "Suit"
-    const cartProduct = {
-      _id: product._id,
-      name: product.name,
-      purchasePrice: product.price,
-      imageUrl: product.images[0]?.url
-    };
-    this.cartService.addToCart(cartProduct, product.sizes[0] || 'M', 'Purchase');
+    this.cartService.addToCart(product, product.sizes[0] || 'M', 1);
     alert(`${product.name} added to cart!`);
   }
 

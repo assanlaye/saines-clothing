@@ -62,14 +62,7 @@ export class ProductDetailComponent implements OnInit {
 
   addToCart(): void {
     if (this.product) {
-      // Adapter for legacy cart service
-      const cartProduct = {
-        _id: this.product._id,
-        name: this.product.name,
-        purchasePrice: this.product.price,
-        imageUrl: this.product.images[0]?.url
-      };
-      this.cartService.addToCart(cartProduct, this.selectedSize, 'Purchase');
+      this.cartService.addToCart(this.product, this.selectedSize, 1);
       alert('Added to cart!');
     }
   }

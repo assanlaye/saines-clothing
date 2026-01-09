@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
+import { Product } from '../../models/product.model';
 
 export interface CartItem {
   id: string;
@@ -7,9 +8,7 @@ export interface CartItem {
   price: number;
   quantity: number;
   imageUrl?: string;
-  size?: string;
-  orderType: 'Purchase' | 'Rental';
-  rentalDays?: number;
+  size: string;
 }
 
 @Injectable({
@@ -39,37 +38,47 @@ export class CartService {
     return this.itemsSubject.value;
   }
 
-  addToCart(product: any, size: string = 'M', orderType: 'Purchase' | 'Rental' = 'Purchase', rentalDays: number = 0) {
+  addToCart(product: Product, size: string, quantity: number = 1) {
     const currentItems = this.getItems();
-    const price = orderType === 'Purchase' ? product.purchasePrice : product.rentalPricePerDay;
 
     const existingItem = currentItems.find(item =>
       item.id === product._id &&
-      item.size === size &&
-      item.orderType === orderType
+      item.size === size
     );
 
     if (existingItem) {
-      existingItem.quantity += 1;
+      existingItem.quantity += quantity;
       this.saveCart([...currentItems]);
     } else {
       const newItem: CartItem = {
         id: product._id,
         name: product.name,
-        price: price,
-        quantity: 1,
-        imageUrl: product.imageUrl,
-        size: size,
-        orderType: orderType,
-        rentalDays: rentalDays
+        price: product.price,
+        quantity: quantity,
+        imageUrl: product.images[0]?.url,
+        size: size
       };
       this.saveCart([...currentItems, newItem]);
     }
   }
 
-  removeFromCart(itemId: string, size?: string) {
+  updateQuantity(productId: string, size: string, quantity: number) {
+    const currentItems = this.getItems();
+    const index = currentItems.findIndex(item => item.id === productId && item.size === size);
+
+    if (index !== -1) {
+      if (quantity <= 0) {
+        this.removeFromCart(productId, size);
+      } else {
+        currentItems[index].quantity = quantity;
+        this.saveCart([...currentItems]);
+      }
+    }
+  }
+
+  removeFromCart(productId: string, size: string) {
     let currentItems = this.getItems();
-    currentItems = currentItems.filter(item => !(item.id === itemId && (size ? item.size === size : true)));
+    currentItems = currentItems.filter(item => !(item.id === productId && item.size === size));
     this.saveCart(currentItems);
   }
 
