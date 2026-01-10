@@ -24,12 +24,12 @@ const productSchema = new mongoose.Schema({
   category: {
     type: String,
     required: [true, 'Please specify a category'],
-    enum: ['Men', 'Women', 'Kids', 'Accessories']
+    enum: ['Men', 'Women', 'Kids']
   },
   type: {
     type: String,
     required: [true, 'Please specify a type'],
-    enum: ['T-Shirts', 'Hoodies', 'Pants', 'Shirts', 'Jackets', 'Shorts', 'Shoes', 'Accessories', 'Dresses', 'Outerwear']
+    enum: ['Topwear', 'Bottomwear', 'Winterwear', 'Basics']
   },
   sizes: {
     type: [String],

@@ -1,8 +1,0 @@
-<div *ngIf="alertService.alert$ | async as alert" 
-     class="container fixed-top mt-3" 
-     style="z-index: 1050; max-width: 600px;">
-  <div class="alert alert-{{ alert.type }} alert-dismissible fade show shadow" role="alert">
-    {{ alert.message }}
-    <button type="button" class="btn-close" (click)="alertService.clear()" aria-label="Close"></button>
-  </div>
-</div>

@@ -187,3 +187,51 @@ exports.deleteProduct = async (req, res) => {
     errorResponse(res, 400, 'Error deleting product', error.message);
   }
 };
+
+// @desc    Get featured products
+// @route   GET /api/products/featured
+// @access  Public
+exports.getFeaturedProducts = async (req, res) => {
+  try {
+    const products = await Product.find({ featured: true }).sort('-createdAt').limit(10);
+    res.status(200).json({
+      success: true,
+      count: products.length,
+      data: products,
+    });
+  } catch (error) {
+    errorResponse(res, 500, 'Server Error', error.message);
+  }
+};
+
+// @desc    Get latest products
+// @route   GET /api/products/latest
+// @access  Public
+exports.getLatestProducts = async (req, res) => {
+  try {
+    const products = await Product.find().sort('-createdAt').limit(10);
+    res.status(200).json({
+      success: true,
+      count: products.length,
+      data: products,
+    });
+  } catch (error) {
+    errorResponse(res, 500, 'Server Error', error.message);
+  }
+};
+
+// @desc    Get best seller products (by numReviews)
+// @route   GET /api/products/bestsellers
+// @access  Public
+exports.getBestSellers = async (req, res) => {
+  try {
+    const products = await Product.find().sort('-numReviews').limit(10);
+    res.status(200).json({
+      success: true,
+      count: products.length,
+      data: products,
+    });
+  } catch (error) {
+    errorResponse(res, 500, 'Server Error', error.message);
+  }
+};

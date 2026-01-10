@@ -5,10 +5,18 @@ const {
   getProductById,
   createProduct,
   updateProduct,
-  deleteProduct
+  deleteProduct,
+  getFeaturedProducts,
+  getLatestProducts,
+  getBestSellers
 } = require('../controllers/productController');
 const { protect } = require('../middleware/auth');
 const { authorize } = require('../middleware/roleAuth');
+
+
+router.get('/featured', getFeaturedProducts);
+router.get('/latest', getLatestProducts);
+router.get('/bestsellers', getBestSellers);
 
 router.route('/')
   .get(getAllProducts)
