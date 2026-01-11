@@ -1,6 +1,6 @@
 <app-toast></app-toast>
-<app-navbar></app-navbar>
+<app-navbar *ngIf="!isAdminRoute"></app-navbar>
 <main class="min-h-screen">
     <router-outlet></router-outlet>
 </main>
-<app-footer></app-footer>
+<app-footer *ngIf="!isAdminRoute"></app-footer>
