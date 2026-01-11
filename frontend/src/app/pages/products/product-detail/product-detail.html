@@ -1,0 +1,230 @@
+<div class="product-detail-page">
+  @if (isLoading()) {
+    <div class="loading-container">
+      <div class="loading">Loading product...</div>
+    </div>
+  } @else if (error()) {
+    <div class="error-container">
+      <div class="error-message">{{ error() }}</div>
+      <a routerLink="/products" class="btn btn-primary">Back to Products</a>
+    </div>
+  } @else if (product()) {
+    @let prod = product()!;
+    
+    <div class="container">
+      <!-- Breadcrumb -->
+      <nav class="breadcrumb">
+        <a routerLink="/">Home</a>
+        <span>/</span>
+        <a routerLink="/products">Products</a>
+        <span>/</span>
+        <span>{{ prod.category }}</span>
+        <span>/</span>
+        <span>{{ prod.name }}</span>
+      </nav>
+
+      <!-- Product Main Section -->
+      <div class="product-main">
+        <!-- Product Images -->
+        <div class="product-images">
+          <div class="main-image">
+            <img [src]="selectedImage() || getProductImage(prod)" [alt]="prod.name" />
+            @if (prod.onSale) {
+              <span class="badge-sale">Sale</span>
+            }
+          </div>
+          @if (prod.images && prod.images.length > 1) {
+            <div class="thumbnail-images">
+              @for (image of prod.images; track image.url) {
+                <div 
+                  class="thumbnail" 
+                  [class.active]="selectedImage() === image.url"
+                  (click)="selectImage(image.url)"
+                >
+                  <img [src]="image.url" [alt]="prod.name" />
+                </div>
+              }
+            </div>
+          }
+        </div>
+
+        <!-- Product Info -->
+        <div class="product-info">
+          <h1 class="product-title">{{ prod.name }}</h1>
+          
+          <!-- Rating -->
+          @if (prod.averageRating > 0) {
+            <div class="product-rating">
+              @for (star of getStars(prod.averageRating); track $index) {
+                <img src="/assets/star_icon.png" alt="star" class="star-icon" />
+              }
+              @if (hasHalfStar(prod.averageRating)) {
+                <img src="/assets/star_dull_icon.png" alt="half star" class="star-icon" />
+              }
+              <span class="rating-value">{{ prod.averageRating.toFixed(1) }}</span>
+              <span class="reviews-count">({{ prod.numReviews }} reviews)</span>
+            </div>
+          }
+
+          <!-- Price -->
+          <div class="product-price">
+            <span class="current-price">{{ formatPrice(prod.price) }}</span>
+            @if (prod.originalPrice && prod.originalPrice > prod.price) {
+              <span class="original-price">{{ formatPrice(prod.originalPrice) }}</span>
+              <span class="discount-badge">
+                {{ getDiscountPercentage(prod.originalPrice, prod.price) }}% OFF
+              </span>
+            }
+          </div>
+
+          <!-- Stock Status -->
+          @if (prod.stockQuantity > 0) {
+            <div class="stock-status in-stock">
+              <span class="stock-icon">✓</span>
+              <span>In Stock ({{ prod.stockQuantity }} available)</span>
+            </div>
+          } @else {
+            <div class="stock-status out-of-stock">
+              <span class="stock-icon">✗</span>
+              <span>Out of Stock</span>
+            </div>
+          }
+
+          <!-- Description -->
+          <div class="product-description">
+            <p>{{ prod.description }}</p>
+          </div>
+
+          <!-- Size Selection -->
+          @if (prod.sizes && prod.sizes.length > 0) {
+            <div class="product-option">
+              <label class="option-label">Size: <span class="selected-value">{{ selectedSize() || 'Select Size' }}</span></label>
+              <div class="size-options">
+                @for (size of prod.sizes; track size) {
+                  <button
+                    type="button"
+                    class="size-btn"
+                    [class.selected]="selectedSize() === size"
+                    (click)="selectSize(size)"
+                  >
+                    {{ size }}
+                  </button>
+                }
+              </div>
+            </div>
+          }
+
+          <!-- Color Selection -->
+          @if (prod.colors && prod.colors.length > 0) {
+            <div class="product-option">
+              <label class="option-label">Color: <span class="selected-value">{{ selectedColor() || 'Select Color' }}</span></label>
+              <div class="color-options">
+                @for (color of prod.colors; track color) {
+                  <button
+                    type="button"
+                    class="color-btn"
+                    [class.selected]="selectedColor() === color"
+                    (click)="selectColor(color)"
+                    [title]="color"
+                    [style.background-color]="getColorCode(color)"
+                  >
+                    <span class="color-name">{{ color }}</span>
+                  </button>
+                }
+              </div>
+            </div>
+          }
+
+          <!-- Quantity -->
+          <div class="product-option">
+            <label class="option-label">Quantity:</label>
+            <div class="quantity-selector">
+              <button type="button" class="qty-btn" (click)="decreaseQuantity()">-</button>
+              <input type="number" [value]="quantity()" readonly class="qty-input" />
+              <button type="button" class="qty-btn" (click)="increaseQuantity()">+</button>
+            </div>
+          </div>
+
+          <!-- Action Buttons -->
+          <div class="action-buttons">
+            <button 
+              class="btn btn-primary btn-large" 
+              (click)="addToCart()"
+              [disabled]="prod.stockQuantity === 0 || !selectedSize()"
+            >
+              <img src="/assets/cart_icon.png" alt="cart" class="btn-icon" />
+              Add to Cart
+            </button>
+            <button 
+              class="btn btn-secondary btn-large" 
+              (click)="buyNow()"
+              [disabled]="prod.stockQuantity === 0 || !selectedSize()"
+            >
+              Buy Now
+            </button>
+          </div>
+
+          <!-- Product Meta -->
+          <div class="product-meta">
+            <div class="meta-item">
+              <strong>Category:</strong> {{ prod.category }}
+            </div>
+            <div class="meta-item">
+              <strong>Type:</strong> {{ prod.type }}
+            </div>
+            <div class="meta-item">
+              <strong>SKU:</strong> {{ prod._id.slice(-8).toUpperCase() }}
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Product Details Tabs -->
+      <div class="product-tabs">
+        <div class="tab-content">
+          <h2>Product Details</h2>
+          <div class="tab-details">
+            <h3>Description</h3>
+            <p>{{ prod.description }}</p>
+            
+            <h3>Features</h3>
+            <ul>
+              <li>Premium quality materials</li>
+              <li>Comfortable fit</li>
+              <li>Durable construction</li>
+              <li>Easy to care for</li>
+            </ul>
+
+            <h3>Care Instructions</h3>
+            <p>Machine wash cold. Tumble dry low. Do not bleach. Iron on low heat if needed.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Related Products -->
+      @if (relatedProducts().length > 0) {
+        <div class="related-products">
+          <h2>You May Also Like</h2>
+          <div class="products-grid">
+            @for (relatedProduct of relatedProducts(); track relatedProduct._id) {
+              <div class="product-card">
+                <a [routerLink]="['/products', relatedProduct._id]" class="product-link">
+                  <div class="product-image-container">
+                    <img [src]="getProductImage(relatedProduct)" [alt]="relatedProduct.name" class="product-image" />
+                  </div>
+                  <div class="product-info-small">
+                    <h3 class="product-name">{{ relatedProduct.name }}</h3>
+                    <div class="product-price">
+                      <span class="current-price">{{ formatPrice(relatedProduct.price) }}</span>
+                    </div>
+                  </div>
+                </a>
+              </div>
+            }
+          </div>
+        </div>
+      }
+    </div>
+  }
+</div>
+
