@@ -1,42 +1,158 @@
-<div class="min-h-screen bg-gray-50 flex flex-col">
-	<!-- Navbar -->
-	<nav class="flex items-center justify-between px-6 py-4 bg-white shadow">
-		<div class="flex items-center gap-2">
-			<img src="/assets/logo.png" alt="Saine Clothing Logo" class="h-10 w-auto" />
-			<span class="text-2xl font-bold text-gray-800">Saine Clothing</span>
-		</div>
-		<div class="flex gap-6">
-			<a href="#" class="text-gray-700 hover:text-blue-600 font-medium">Home</a>
-			<a href="#" class="text-gray-700 hover:text-blue-600 font-medium">Collection</a>
-			<a href="#" class="text-gray-700 hover:text-blue-600 font-medium">About</a>
-			<a href="#" class="text-gray-700 hover:text-blue-600 font-medium">Contact</a>
-		</div>
-		<div>
-			<img src="/assets/cart_icon.png" alt="Cart" class="h-8 w-8" />
-		</div>
-	</nav>
+<!-- Hero Section -->
+<section class="hero">
+  <div class="hero-container">
+    <div class="hero-content">
+      <h1 class="hero-title">Fashion That Speaks Your Style</h1>
+      <p class="hero-subtitle">Discover the latest trends in men's, women's, and kids' clothing</p>
+      <div class="hero-buttons">
+        <a routerLink="/products" class="btn btn-primary">Shop Now</a>
+        <a routerLink="/products" [queryParams]="{category: 'Men'}" class="btn btn-secondary">Men's Collection</a>
+      </div>
+    </div>
+    <div class="hero-image">
+      <img src="/assets/hero.png" alt="Fashion Collection" />
+    </div>
+  </div>
+</section>
 
-	<!-- Hero Section -->
-	<section class="flex flex-col md:flex-row items-center justify-between px-6 py-12 bg-gradient-to-r from-blue-100 to-blue-300">
-		<div class="flex-1 mb-8 md:mb-0">
-			<h1 class="text-4xl md:text-5xl font-extrabold text-gray-900 mb-4">Welcome to Saine Clothing</h1>
-			<p class="text-lg text-gray-700 mb-6">Discover the latest fashion trends and best sellers. Shop now for exclusive deals and quality products.</p>
-			<a href="#" class="px-6 py-3 bg-blue-600 text-white rounded-lg font-semibold shadow hover:bg-blue-700 transition">Shop Now</a>
-		</div>
-		<div class="flex-1 flex justify-center">
-			<img src="/assets/hero.png" alt="Hero" class="max-h-80 w-auto rounded-xl shadow-lg" />
-		</div>
-	</section>
+<!-- Featured Products -->
+<section class="featured-section">
+  <div class="container">
+    <div class="section-header">
+      <h2 class="section-title">Featured Products</h2>
+      <p class="section-subtitle">Handpicked for you</p>
+    </div>
+    @if (isLoading()) {
+      <div class="loading">Loading...</div>
+    } @else {
+      <div class="products-grid">
+        @for (product of featuredProducts(); track product._id) {
+          <div class="product-card">
+            <a [routerLink]="['/products', product._id]" class="product-link">
+              <div class="product-image-container">
+                <img [src]="getProductImage(product)" [alt]="product.name" class="product-image" />
+                @if (product.onSale) {
+                  <span class="badge-sale">Sale</span>
+                }
+                @if (product.featured) {
+                  <span class="badge-featured">Featured</span>
+                }
+              </div>
+              <div class="product-info">
+                <h3 class="product-name">{{ product.name }}</h3>
+                <p class="product-category">{{ product.category }} - {{ product.type }}</p>
+                <div class="product-rating">
+                  @for (star of getStars(product.averageRating); track $index) {
+                    <img src="/assets/star_icon.png" alt="star" class="star-icon" />
+                  }
+                  @if (hasHalfStar(product.averageRating)) {
+                    <img src="/assets/star_dull_icon.png" alt="half star" class="star-icon" />
+                  }
+                  <span class="rating-text">({{ product.numReviews }})</span>
+                </div>
+                <div class="product-price">
+                  <span class="current-price">{{ formatPrice(product.price) }}</span>
+                  @if (product.originalPrice && product.originalPrice > product.price) {
+                    <span class="original-price">{{ formatPrice(product.originalPrice) }}</span>
+                  }
+                </div>
+              </div>
+            </a>
+          </div>
+        }
+      </div>
+      @if (featuredProducts().length === 0) {
+        <p class="no-products">No featured products available</p>
+      }
+    }
+  </div>
+</section>
 
-	<!-- Placeholder for Latest Arrivals, Best Sellers, Policies, Subscribe, Footer -->
-	<section class="px-6 py-12">
-		<h2 class="text-2xl font-bold mb-4">Latest Arrivals</h2>
-		<div class="grid grid-cols-2 md:grid-cols-4 gap-6">
-			<!-- Example product images -->
-			<img src="/assets/p_img1.png" alt="Product 1" class="rounded-lg shadow" />
-			<img src="/assets/p_img2_1.png" alt="Product 2" class="rounded-lg shadow" />
-			<img src="/assets/p_img3.png" alt="Product 3" class="rounded-lg shadow" />
-			<img src="/assets/p_img4.png" alt="Product 4" class="rounded-lg shadow" />
-		</div>
-	</section>
-</div>
+<!-- Latest Products -->
+<section class="latest-section">
+  <div class="container">
+    <div class="section-header">
+      <h2 class="section-title">Latest Arrivals</h2>
+      <p class="section-subtitle">Fresh from our collection</p>
+    </div>
+    <div class="products-grid">
+      @for (product of latestProducts(); track product._id) {
+        <div class="product-card">
+          <a [routerLink]="['/products', product._id]" class="product-link">
+            <div class="product-image-container">
+              <img [src]="getProductImage(product)" [alt]="product.name" class="product-image" />
+            </div>
+            <div class="product-info">
+              <h3 class="product-name">{{ product.name }}</h3>
+              <p class="product-category">{{ product.category }}</p>
+              <div class="product-price">
+                <span class="current-price">{{ formatPrice(product.price) }}</span>
+              </div>
+            </div>
+          </a>
+        </div>
+      }
+    </div>
+  </div>
+</section>
+
+<!-- Best Sellers -->
+<section class="bestsellers-section">
+  <div class="container">
+    <div class="section-header">
+      <h2 class="section-title">Best Sellers</h2>
+      <p class="section-subtitle">Customer favorites</p>
+    </div>
+    <div class="products-grid">
+      @for (product of bestSellers(); track product._id) {
+        <div class="product-card">
+          <a [routerLink]="['/products', product._id]" class="product-link">
+            <div class="product-image-container">
+              <img [src]="getProductImage(product)" [alt]="product.name" class="product-image" />
+            </div>
+            <div class="product-info">
+              <h3 class="product-name">{{ product.name }}</h3>
+              <div class="product-rating">
+                @for (star of getStars(product.averageRating); track $index) {
+                  <img src="/assets/star_icon.png" alt="star" class="star-icon" />
+                }
+                <span class="rating-text">({{ product.numReviews }})</span>
+              </div>
+              <div class="product-price">
+                <span class="current-price">{{ formatPrice(product.price) }}</span>
+              </div>
+            </div>
+          </a>
+        </div>
+      }
+    </div>
+  </div>
+</section>
+
+<!-- Features Section -->
+<section class="features-section">
+  <div class="container">
+    <div class="features-grid">
+      <div class="feature-item">
+        <img src="/assets/quality_icon.png" alt="Quality" class="feature-icon" />
+        <h3>Premium Quality</h3>
+        <p>Only the finest materials and craftsmanship</p>
+      </div>
+      <div class="feature-item">
+        <img src="/assets/support_img.png" alt="Support" class="feature-icon" />
+        <h3>24/7 Support</h3>
+        <p>Our team is always here to help you</p>
+      </div>
+      <div class="feature-item">
+        <img src="/assets/exchange_icon.png" alt="Exchange" class="feature-icon" />
+        <h3>Easy Returns</h3>
+        <p>Hassle-free returns and exchanges</p>
+      </div>
+      <div class="feature-item">
+        <img src="/assets/wave_icon.png" alt="Delivery" class="feature-icon" />
+        <h3>Fast Delivery</h3>
+        <p>Quick and secure shipping worldwide</p>
+      </div>
+    </div>
+  </div>
+</section>
