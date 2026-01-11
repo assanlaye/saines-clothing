@@ -1,0 +1,13 @@
+services:
+  - type: web
+    name: saineclothing-backend
+    env: node
+    buildCommand: "npm install"
+    startCommand: "npm start"
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: MONGO_URI
+        value: your-mongodb-uri
+      - key: CLOUDINARY_URL
+        value: your-cloudinary-url

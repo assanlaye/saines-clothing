@@ -6,7 +6,12 @@ const placeOrder = async (req, res) => {
     try {
         const { userId, items, amount, address, paymentMethod } = req.body;
 
+        // Generate unique order number
+        const orderCount = await Order.countDocuments();
+        const orderNumber = `ORD-${Date.now()}-${orderCount + 1}`;
+
         const orderData = {
+            orderNumber,
             userId,
             items,
             address,
@@ -22,11 +27,11 @@ const placeOrder = async (req, res) => {
         // Clear user cart
         await User.findByIdAndUpdate(userId, { cartData: {} });
 
-        res.json({ success: true, message: "Order Placed" });
+        res.json({ success: true, message: "Order Placed", order: newOrder });
 
     } catch (error) {
-        console.log(error);
-        res.json({ success: false, message: error.message });
+        console.error("Error placing order:", error);
+        res.json({ success: false, message: error.message || "Failed to place order" });
     }
 }
 

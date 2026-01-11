@@ -93,6 +93,7 @@ export class AdminAddProductComponent {
             });
 
             const response = await this.productService.addProduct(formData);
+            console.log('Add product response:', response);
             if (response.success) {
                 this.toastService.success('Product added successfully!');
                 this.productForm.reset({ category: 'Men', subCategory: 'Topwear', bestseller: false });
@@ -100,11 +101,14 @@ export class AdminAddProductComponent {
                 this.images = [null, null, null, null];
                 this.imagePreviews = [null, null, null, null];
             } else {
-                this.toastService.error(response.message);
+                const errorMessage = response.message || 'Failed to add product';
+                console.error('Product add error:', errorMessage);
+                this.toastService.error(errorMessage);
             }
-        } catch (error) {
+        } catch (error: any) {
             console.error('Error adding product:', error);
-            this.toastService.error('Failed to add product');
+            const errorMessage = error?.error?.message || error?.message || 'Failed to add product. Please check console for details.';
+            this.toastService.error(errorMessage);
         } finally {
             this.loading = false;
         }

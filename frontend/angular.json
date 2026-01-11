@@ -31,7 +31,10 @@
             ],
             "styles": [
               "src/styles.css"
-            ]
+            ],
+            "outputPath": "dist/frontend",
+            "baseHref": "/",
+            "deployUrl": "/"
           },
           "configurations": {
             "production": {

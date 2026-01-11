@@ -22,16 +22,38 @@ const addProduct = async (req, res) => {
 
         const { name, description, price, category, subCategory, sizes, bestseller } = req.body;
 
-        const images = req.files ? req.files.map(file => file.path) : [];
+        // Validate required fields
+        if (!name || !description || !price || !category || !subCategory) {
+            return res.json({ success: false, message: "Missing required fields" });
+        }
+
+        // Validate that at least one image is uploaded
+        if (!req.files || req.files.length === 0) {
+            return res.json({ success: false, message: "At least one image is required" });
+        }
+
+        const images = req.files.map(file => file.path);
+
+        // Validate sizes
+        let parsedSizes = [];
+        try {
+            parsedSizes = sizes ? JSON.parse(sizes) : [];
+        } catch (e) {
+            parsedSizes = Array.isArray(sizes) ? sizes : [];
+        }
+
+        if (!Array.isArray(parsedSizes) || parsedSizes.length === 0) {
+            return res.json({ success: false, message: "At least one size is required" });
+        }
 
         const productData = {
-            name,
-            description,
+            name: name.trim(),
+            description: description.trim(),
             category,
             price: Number(price),
             subCategory,
             bestseller: bestseller === "true" || bestseller === true,
-            sizes: JSON.parse(sizes || '[]'),
+            sizes: parsedSizes,
             image: images,
             date: Date.now()
         };
@@ -41,10 +63,10 @@ const addProduct = async (req, res) => {
         const product = new Product(productData);
         await product.save();
 
-        res.json({ success: true, message: "Product Added" });
+        res.json({ success: true, message: "Product Added", product });
     } catch (error) {
         console.error("Error in addProduct:", error);
-        res.json({ success: false, message: error.message });
+        res.json({ success: false, message: error.message || "Failed to add product" });
     }
 }
 

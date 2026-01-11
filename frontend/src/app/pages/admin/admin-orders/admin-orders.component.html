@@ -21,10 +21,13 @@
                     <p class="text-sm font-semibold text-gray-900 mt-2">{{order.address.firstName}}
                         {{order.address.lastName}}</p>
                     <div class="text-xs text-gray-500 leading-relaxed">
-                        <p>{{order.address.street}},</p>
-                        <p>{{order.address.city}}, {{order.address.state}}, {{order.address.country}},
-                            {{order.address.zipcode}}</p>
-                        <p>{{order.address.phone}}</p>
+                        <p *ngIf="order.address.email">{{order.address.email}}</p>
+                        <p *ngIf="order.address.phone">{{order.address.phone}}</p>
+                        <p *ngIf="order.address.region">{{order.address.region}}</p>
+                        <p *ngIf="order.address.townArea">{{order.address.townArea}}</p>
+                        <!-- Fallback for old address format -->
+                        <p *ngIf="order.address.street && !order.address.region">{{order.address.street}}</p>
+                        <p *ngIf="order.address.city && !order.address.region">{{order.address.city}}, {{order.address.state}}, {{order.address.country}}, {{order.address.zipcode}}</p>
                     </div>
                 </div>
             </div>

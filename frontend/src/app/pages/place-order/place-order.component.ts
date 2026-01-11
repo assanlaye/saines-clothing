@@ -22,6 +22,16 @@ export class PlaceOrderComponent implements OnInit {
     total = 0;
     readonly SHIPPING_FEE = 10;
     readonly ChevronRight = ChevronRight;
+    
+    regions = [
+        'Banjul',
+        'Kanifing Municipality (KMC)',
+        'West Coast Region',
+        'Lower River Region',
+        'North Bank Region',
+        'Central River Region',
+        'Upper River Region'
+    ];
 
     constructor(
         private fb: FormBuilder,
@@ -35,12 +45,9 @@ export class PlaceOrderComponent implements OnInit {
             firstName: ['', [Validators.required, Validators.minLength(2)]],
             lastName: ['', [Validators.required, Validators.minLength(2)]],
             email: ['', [Validators.required, Validators.email]],
-            street: ['', [Validators.required]],
-            city: ['', [Validators.required]],
-            state: ['', [Validators.required]],
-            zipcode: ['', [Validators.required]],
-            country: ['', [Validators.required]],
-            phone: ['', [Validators.required, Validators.pattern('^[0-9]{7}$')]]
+            region: ['', [Validators.required]],
+            townArea: ['', [Validators.required]],
+            phone: ['', [Validators.required, Validators.pattern('^\\+220\\s?[0-9]{7}$')]]
         });
     }
 

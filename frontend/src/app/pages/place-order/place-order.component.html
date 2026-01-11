@@ -26,11 +26,17 @@
                                 <input type="text" formControlName="firstName" placeholder="First name"
                                     [class.border-destructive]="isFieldInvalid('firstName')"
                                     class="w-full px-4 py-3 border border-border bg-background text-foreground placeholder:text-muted-foreground focus:outline-none focus:border-foreground transition-colors" />
+                                <p *ngIf="isFieldInvalid('firstName')" class="text-destructive text-xs mt-1">
+                                    First name is required (min 2 characters).
+                                </p>
                             </div>
                             <div class="space-y-1">
                                 <input type="text" formControlName="lastName" placeholder="Last name"
                                     [class.border-destructive]="isFieldInvalid('lastName')"
                                     class="w-full px-4 py-3 border border-border bg-background text-foreground placeholder:text-muted-foreground focus:outline-none focus:border-foreground transition-colors" />
+                                <p *ngIf="isFieldInvalid('lastName')" class="text-destructive text-xs mt-1">
+                                    Last name is required (min 2 characters).
+                                </p>
                             </div>
                         </div>
 
@@ -38,47 +44,38 @@
                             <input type="email" formControlName="email" placeholder="Email address"
                                 [class.border-destructive]="isFieldInvalid('email')"
                                 class="w-full px-4 py-3 border border-border bg-background text-foreground placeholder:text-muted-foreground focus:outline-none focus:border-foreground transition-colors" />
+                            <p *ngIf="isFieldInvalid('email')" class="text-destructive text-xs mt-1">
+                                Please enter a valid email address.
+                            </p>
                         </div>
 
                         <div class="space-y-1">
-                            <input type="text" formControlName="street" placeholder="Street"
-                                [class.border-destructive]="isFieldInvalid('street')"
+                            <select formControlName="region"
+                                [class.border-destructive]="isFieldInvalid('region')"
+                                class="w-full px-4 py-3 border border-border bg-background text-foreground focus:outline-none focus:border-foreground transition-colors">
+                                <option value="" disabled selected>Select Region</option>
+                                <option *ngFor="let region of regions" [value]="region">{{ region }}</option>
+                            </select>
+                            <p *ngIf="isFieldInvalid('region')" class="text-destructive text-xs mt-1">
+                                Please select a region.
+                            </p>
+                        </div>
+
+                        <div class="space-y-1">
+                            <input type="text" formControlName="townArea" placeholder="e.g, Brikama"
+                                [class.border-destructive]="isFieldInvalid('townArea')"
                                 class="w-full px-4 py-3 border border-border bg-background text-foreground placeholder:text-muted-foreground focus:outline-none focus:border-foreground transition-colors" />
-                        </div>
-
-                        <div class="grid grid-cols-2 gap-4">
-                            <div class="space-y-1">
-                                <input type="text" formControlName="city" placeholder="City"
-                                    [class.border-destructive]="isFieldInvalid('city')"
-                                    class="w-full px-4 py-3 border border-border bg-background text-foreground placeholder:text-muted-foreground focus:outline-none focus:border-foreground transition-colors" />
-                            </div>
-                            <div class="space-y-1">
-                                <input type="text" formControlName="state" placeholder="State"
-                                    [class.border-destructive]="isFieldInvalid('state')"
-                                    class="w-full px-4 py-3 border border-border bg-background text-foreground placeholder:text-muted-foreground focus:outline-none focus:border-foreground transition-colors" />
-                            </div>
-                        </div>
-
-                        <div class="grid grid-cols-2 gap-4">
-                            <div class="space-y-1">
-                                <input type="text" formControlName="zipcode" placeholder="Zipcode"
-                                    [class.border-destructive]="isFieldInvalid('zipcode')"
-                                    class="w-full px-4 py-3 border border-border bg-background text-foreground placeholder:text-muted-foreground focus:outline-none focus:border-foreground transition-colors" />
-                            </div>
-                            <div class="space-y-1">
-                                <input type="text" formControlName="country" placeholder="Country"
-                                    [class.border-destructive]="isFieldInvalid('country')"
-                                    class="w-full px-4 py-3 border border-border bg-background text-foreground placeholder:text-muted-foreground focus:outline-none focus:border-foreground transition-colors" />
-                            </div>
+                            <p *ngIf="isFieldInvalid('townArea')" class="text-destructive text-xs mt-1">
+                                Please enter your town/area.
+                            </p>
                         </div>
 
                         <div class="space-y-1">
-                            <input type="tel" formControlName="phone" placeholder="Phone (7 digits)"
+                            <input type="tel" formControlName="phone" placeholder="(e.g., +220 2181773)"
                                 [class.border-destructive]="isFieldInvalid('phone')"
-                                maxlength="7"
                                 class="w-full px-4 py-3 border border-border bg-background text-foreground placeholder:text-muted-foreground focus:outline-none focus:border-foreground transition-colors" />
                             <p *ngIf="isFieldInvalid('phone')" class="text-destructive text-xs mt-1">
-                                Please enter a valid 7-digit phone number.
+                                Please enter a valid phone number (e.g., +220 2181773).
                             </p>
                         </div>
                     </div>

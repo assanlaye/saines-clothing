@@ -1,6 +1,11 @@
 const mongoose = require('mongoose');
 
 const orderSchema = new mongoose.Schema({
+    orderNumber: { 
+        type: String, 
+        unique: true,
+        sparse: true // Allows multiple null values but enforces uniqueness for non-null values
+    },
     userId: { type: String, required: true },
     items: { type: Array, required: true },
     amount: { type: Number, required: true },
