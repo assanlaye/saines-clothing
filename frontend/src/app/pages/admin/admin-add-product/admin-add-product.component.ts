@@ -9,7 +9,7 @@ import { ToastService } from '../../../services/toast.service';
     standalone: true,
     imports: [CommonModule, ReactiveFormsModule],
     templateUrl: './admin-add-product.component.html',
-    styleUrls: ['./admin-add-product.component.css']
+    styleUrls: []
 })
 export class AdminAddProductComponent {
     productForm: FormGroup;

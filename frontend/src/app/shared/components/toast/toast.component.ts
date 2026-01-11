@@ -8,7 +8,7 @@ import { LucideAngularModule, CheckCircle, AlertCircle, Info, XCircle, X } from 
     standalone: true,
     imports: [CommonModule, LucideAngularModule],
     templateUrl: './toast.component.html',
-    styleUrls: ['./toast.component.css']
+    styleUrls: []
 })
 export class ToastComponent implements OnInit {
     toasts: Toast[] = [];

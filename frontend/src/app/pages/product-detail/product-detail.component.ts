@@ -5,7 +5,6 @@ import { LucideAngularModule, ChevronRight, Star } from 'lucide-angular';
 import { ProductService } from '../../services/product.service';
 import { CartService } from '../../services/cart.service';
 import { Product } from '../../models/product.model';
-import { ProductCardComponent } from '../../shared/components/product-card/product-card.component';
 import { ProductGridComponent } from '../../shared/components/product-grid/product-grid.component';
 
 @Component({
@@ -13,7 +12,6 @@ import { ProductGridComponent } from '../../shared/components/product-grid/produ
     standalone: true,
     imports: [CommonModule, RouterModule,
         LucideAngularModule,
-        ProductCardComponent,
         ProductGridComponent
     ],
     templateUrl: './product-detail.component.html',

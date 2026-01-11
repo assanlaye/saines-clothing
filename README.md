@@ -1,4 +1,4 @@
-# forever
+# Saine's Clothing
 This is the **Saine's Clothing** e-commerce platform built using the **MEAN stack** (MongoDB, Express, Angular, Node.js). 
 
 ## Features

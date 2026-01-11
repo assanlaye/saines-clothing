@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HeroComponent } from '../../shared/components/hero/hero.component';
-import { ProductCardComponent } from '../../shared/components/product-card/product-card.component';
 import { PolicySectionComponent } from '../../shared/components/policy-section/policy-section.component';
 import { NewsletterComponent } from '../../shared/components/newsletter/newsletter.component';
 import { ProductGridComponent } from '../../shared/components/product-grid/product-grid.component';
@@ -14,7 +13,6 @@ import { Product } from '../../models/product.model';
     imports: [
         CommonModule,
         HeroComponent,
-        ProductCardComponent,
         PolicySectionComponent,
         NewsletterComponent,
         ProductGridComponent

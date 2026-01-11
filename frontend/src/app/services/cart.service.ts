@@ -2,14 +2,22 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { Product } from '../models/product.model';
 
+export interface CartItem {
+    id: string;
+    name: string;
+    price: number;
+    quantity: number;
+    size?: string;
+}
+
 @Injectable({
     providedIn: 'root'
 })
 export class CartService {
-    private cartItems: any[] = JSON.parse(localStorage.getItem('cartItems') || '[]');
+    private cartItems: CartItem[] = JSON.parse(localStorage.getItem('cartItems') || '[]');
     private cartCountSubject = new BehaviorSubject<number>(this.calculateCount());
     private cartTotalSubject = new BehaviorSubject<number>(this.calculateTotal());
-    private cartItemsSubject = new BehaviorSubject<any[]>(this.cartItems);
+    private cartItemsSubject = new BehaviorSubject<CartItem[]>(this.cartItems);
 
     cartCount$ = this.cartCountSubject.asObservable();
     cartTotal$ = this.cartTotalSubject.asObservable();

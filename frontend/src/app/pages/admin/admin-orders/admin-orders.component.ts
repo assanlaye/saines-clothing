@@ -8,7 +8,7 @@ import { ToastService } from '../../../services/toast.service';
     standalone: true,
     imports: [CommonModule],
     templateUrl: './admin-orders.component.html',
-    styleUrls: ['./admin-orders.component.css']
+    styleUrls: []
 })
 export class AdminOrdersComponent implements OnInit {
     orders: any[] = [];

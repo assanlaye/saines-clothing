@@ -9,7 +9,7 @@ import { LucideAngularModule, X } from 'lucide-angular';
     standalone: true,
     imports: [CommonModule, LucideAngularModule],
     templateUrl: './admin-products.component.html',
-    styleUrls: ['./admin-products.component.css']
+    styleUrls: []
 })
 export class AdminProductsComponent implements OnInit {
     products: any[] = [];
