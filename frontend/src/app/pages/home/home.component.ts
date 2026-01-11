@@ -27,9 +27,20 @@ export class HomeComponent implements OnInit {
     constructor(private productService: ProductService) { }
 
     ngOnInit(): void {
-        this.productService.getProducts().subscribe((products: Product[]) => {
-            this.latestProducts = products.slice(0, 10);
-            this.bestSellers = products.filter((p: Product) => p.bestseller).slice(0, 5);
+        this.productService.getProducts().subscribe({
+            next: (products: Product[]) => {
+                console.log('Products received in HomeComponent:', products);
+                console.log('Products length:', products?.length);
+                this.latestProducts = products?.slice(0, 10) || [];
+                this.bestSellers = products?.filter((p: Product) => p.bestseller).slice(0, 5) || [];
+                console.log('Latest products:', this.latestProducts);
+                console.log('Best sellers:', this.bestSellers);
+            },
+            error: (error) => {
+                console.error('Error fetching products:', error);
+                this.latestProducts = [];
+                this.bestSellers = [];
+            }
         });
     }
 }

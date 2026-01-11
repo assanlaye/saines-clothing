@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable, lastValueFrom } from 'rxjs';
+import { Observable, lastValueFrom, map, tap } from 'rxjs';
 import { Product } from '../models/product.model';
 import { environment } from '../../environments/environment';
 import { AuthService } from './auth.service';
@@ -22,8 +22,17 @@ export class ProductService {
         });
     }
 
-    getProducts(filters: any = {}): Observable<any> {
-        return this.http.get<any>(`${this.apiUrl}/list`, { params: filters });
+    getProducts(filters: any = {}): Observable<Product[]> {
+        console.log('API Call to:', `${this.apiUrl}`, 'with filters:', filters);
+        return this.http.get<any>(`${this.apiUrl}`, { params: filters }).pipe(
+            tap(response => console.log('API Response:', response)),
+            map(response => {
+                // Handle response structure: {success: true, products: []}
+                const products = response.success ? response.products : (response.products || response || []);
+                console.log('Mapped products:', products);
+                return products;
+            })
+        );
     }
 
     async getProductById(id: string): Promise<Product | undefined> {

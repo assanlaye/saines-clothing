@@ -13,5 +13,13 @@ export class ProductCardComponent {
     @Input() id!: string;
     @Input() name!: string;
     @Input() price!: number;
-    @Input() image!: string;
+    @Input() image!: string | string[];
+
+    get imageUrl(): string {
+        // Handle both string and array inputs
+        if (Array.isArray(this.image)) {
+            return this.image[0] || '';
+        }
+        return this.image || '';
+    }
 }

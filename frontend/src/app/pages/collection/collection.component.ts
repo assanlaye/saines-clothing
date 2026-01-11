@@ -41,9 +41,18 @@ export class CollectionComponent implements OnInit {
     constructor(private productService: ProductService) { }
 
     ngOnInit(): void {
-        this.productService.getProducts().subscribe(products => {
-            this.allProducts = products;
-            this.applyFilters();
+        this.productService.getProducts().subscribe({
+            next: (products: Product[]) => {
+                console.log('Products received in CollectionComponent:', products);
+                console.log('Products length:', products?.length);
+                this.allProducts = products || [];
+                this.applyFilters();
+            },
+            error: (error) => {
+                console.error('Error fetching products:', error);
+                this.allProducts = [];
+                this.filteredProducts = [];
+            }
         });
     }
 

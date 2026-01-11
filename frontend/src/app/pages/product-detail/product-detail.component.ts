@@ -47,15 +47,20 @@ export class ProductDetailComponent implements OnInit {
         const product = await this.productService.getProductById(id);
         if (product) {
             this.product = product;
-            this.productImages = [product.image, product.image, product.image, product.image];
+            // Handle both string and string[] image types
+            if (Array.isArray(product.image)) {
+                this.productImages = product.image.length > 0 ? product.image : [];
+            } else {
+                // If it's a string, use it for all images (or fetch from backend)
+                this.productImages = product.image ? [product.image] : [];
+            }
             this.loadRelatedProducts(product);
         }
     }
 
     loadRelatedProducts(product: Product) {
         this.productService.getProducts({ category: product.category }).subscribe({
-            next: (response) => {
-                const products: Product[] = response.products || [];
+            next: (products: Product[]) => {
                 this.relatedProducts = products.filter((p: Product) => p._id !== product._id).slice(0, 5);
             },
             error: (err) => console.error('Error loading related products:', err)

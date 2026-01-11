@@ -24,16 +24,16 @@ export class AdminProductsComponent implements OnInit {
         this.fetchProducts();
     }
 
-    async fetchProducts() {
-        try {
-            const response = await this.productService.getProducts().toPromise();
-            if (response.success) {
-                this.products = response.products;
+    fetchProducts() {
+        this.productService.getProducts().subscribe({
+            next: (products) => {
+                this.products = products || [];
+            },
+            error: (error) => {
+                console.error('Error fetching products:', error);
+                this.toastService.error('Failed to fetch products');
             }
-        } catch (error) {
-            console.error('Error fetching products:', error);
-            this.toastService.error('Failed to fetch products');
-        }
+        });
     }
 
     async deleteProduct(id: string) {

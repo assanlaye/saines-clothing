@@ -14,12 +14,18 @@
         </div>
 
         <!-- Products Grid -->
-        <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 md:gap-6">
+        <div *ngIf="products && products.length > 0; else noProducts" 
+            class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 md:gap-6">
             <div *ngFor="let product of products; let i = index" class="animate-fade-in"
                 [style.animation-delay]="(i * 0.1) + 's'">
                 <app-product-card [id]="product._id" [name]="product.name" [price]="product.price"
                     [image]="product.image"></app-product-card>
             </div>
         </div>
+        <ng-template #noProducts>
+            <div class="text-center py-8">
+                <p class="text-muted-foreground">No products available at the moment.</p>
+            </div>
+        </ng-template>
     </div>
 </section>

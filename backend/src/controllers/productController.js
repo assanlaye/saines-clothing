@@ -16,6 +16,10 @@ const listProducts = async (req, res) => {
 // Add new product (admin)
 const addProduct = async (req, res) => {
     try {
+        console.log("Adding Product...");
+        console.log("Body:", req.body);
+        console.log("Files:", req.files);
+
         const { name, description, price, category, subCategory, sizes, bestseller } = req.body;
 
         const images = req.files ? req.files.map(file => file.path) : [];
@@ -32,12 +36,14 @@ const addProduct = async (req, res) => {
             date: Date.now()
         };
 
+        console.log("Product Data:", productData);
+
         const product = new Product(productData);
         await product.save();
 
         res.json({ success: true, message: "Product Added" });
     } catch (error) {
-        console.log(error);
+        console.error("Error in addProduct:", error);
         res.json({ success: false, message: error.message });
     }
 }

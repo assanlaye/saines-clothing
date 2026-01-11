@@ -15,10 +15,22 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
+// Request Logger
+app.use((req, res, next) => {
+    console.log(`[${new Date().toISOString()}] ${req.method} ${req.url}`);
+    next();
+});
+
 // Routes
-app.use('/api/products', require('./routes/productRoutes'));
+app.use('/api/product', require('./routes/productRoutes'));
 app.use('/api/user', require('./routes/authRoutes'));
 app.use('/api/order', require('./routes/orderRoutes'));
+
+// Global Error Handler
+app.use((err, req, res, next) => {
+    console.error("Global Error Handler:", err);
+    res.status(500).json({ success: false, message: err.message });
+});
 
 // Basic Route
 app.get('/', (req, res) => {
