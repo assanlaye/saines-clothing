@@ -1,6 +1,6 @@
 {
   "rewrites": [
-    { "source": "/api/(.*)", "destination": "https://saines-clothing.onrender.com/api/$1" },
+    { "source": "/api/(.*)", "destination": "https://saines-clothing.onrender.com" },
     { "source": "(.*)", "destination": "/index.html" }
   ]
 }
