@@ -1,0 +1,13 @@
+.admin-nav-active {
+    background-color: #FFF1F2 !important;
+    border-color: #FFB7B7 !important;
+    color: #000 !important;
+}
+
+nav a {
+    border-right: none;
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+    margin-right: -24px;
+    z-index: 10;
+}

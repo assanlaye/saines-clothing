@@ -1,0 +1,170 @@
+<div class="min-h-screen bg-background text-foreground">
+    <main class="container mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <!-- Breadcrumb -->
+        <div class="flex items-center gap-2 text-sm text-muted-foreground mb-8">
+            <a routerLink="/" class="hover:text-foreground">HOME</a>
+            <lucide-icon [name]="ChevronRight" class="w-4 h-4"></lucide-icon>
+            <a routerLink="/cart" class="hover:text-foreground">CART</a>
+            <lucide-icon [name]="ChevronRight" class="w-4 h-4"></lucide-icon>
+            <span class="text-foreground">CHECKOUT</span>
+        </div>
+
+        <form [formGroup]="orderForm" (ngSubmit)="handleSubmit()">
+            <div class="grid lg:grid-cols-2 gap-12">
+                <!-- Delivery Information -->
+                <div>
+                    <div class="flex items-center gap-3 mb-8">
+                        <h1 class="section-title">
+                            DELIVERY <span class="text-muted-foreground">INFORMATION</span>
+                        </h1>
+                        <span class="w-10 h-px bg-foreground"></span>
+                    </div>
+
+                    <div class="space-y-4">
+                        <div class="grid grid-cols-2 gap-4">
+                            <div class="space-y-1">
+                                <input type="text" formControlName="firstName" placeholder="First name"
+                                    [class.border-destructive]="isFieldInvalid('firstName')"
+                                    class="w-full px-4 py-3 border border-border bg-background text-foreground placeholder:text-muted-foreground focus:outline-none focus:border-foreground transition-colors" />
+                            </div>
+                            <div class="space-y-1">
+                                <input type="text" formControlName="lastName" placeholder="Last name"
+                                    [class.border-destructive]="isFieldInvalid('lastName')"
+                                    class="w-full px-4 py-3 border border-border bg-background text-foreground placeholder:text-muted-foreground focus:outline-none focus:border-foreground transition-colors" />
+                            </div>
+                        </div>
+
+                        <div class="space-y-1">
+                            <input type="email" formControlName="email" placeholder="Email address"
+                                [class.border-destructive]="isFieldInvalid('email')"
+                                class="w-full px-4 py-3 border border-border bg-background text-foreground placeholder:text-muted-foreground focus:outline-none focus:border-foreground transition-colors" />
+                        </div>
+
+                        <div class="space-y-1">
+                            <input type="text" formControlName="street" placeholder="Street"
+                                [class.border-destructive]="isFieldInvalid('street')"
+                                class="w-full px-4 py-3 border border-border bg-background text-foreground placeholder:text-muted-foreground focus:outline-none focus:border-foreground transition-colors" />
+                        </div>
+
+                        <div class="grid grid-cols-2 gap-4">
+                            <div class="space-y-1">
+                                <input type="text" formControlName="city" placeholder="City"
+                                    [class.border-destructive]="isFieldInvalid('city')"
+                                    class="w-full px-4 py-3 border border-border bg-background text-foreground placeholder:text-muted-foreground focus:outline-none focus:border-foreground transition-colors" />
+                            </div>
+                            <div class="space-y-1">
+                                <input type="text" formControlName="state" placeholder="State"
+                                    [class.border-destructive]="isFieldInvalid('state')"
+                                    class="w-full px-4 py-3 border border-border bg-background text-foreground placeholder:text-muted-foreground focus:outline-none focus:border-foreground transition-colors" />
+                            </div>
+                        </div>
+
+                        <div class="grid grid-cols-2 gap-4">
+                            <div class="space-y-1">
+                                <input type="text" formControlName="zipcode" placeholder="Zipcode"
+                                    [class.border-destructive]="isFieldInvalid('zipcode')"
+                                    class="w-full px-4 py-3 border border-border bg-background text-foreground placeholder:text-muted-foreground focus:outline-none focus:border-foreground transition-colors" />
+                            </div>
+                            <div class="space-y-1">
+                                <input type="text" formControlName="country" placeholder="Country"
+                                    [class.border-destructive]="isFieldInvalid('country')"
+                                    class="w-full px-4 py-3 border border-border bg-background text-foreground placeholder:text-muted-foreground focus:outline-none focus:border-foreground transition-colors" />
+                            </div>
+                        </div>
+
+                        <div class="space-y-1">
+                            <input type="tel" formControlName="phone" placeholder="Phone"
+                                [class.border-destructive]="isFieldInvalid('phone')"
+                                class="w-full px-4 py-3 border border-border bg-background text-foreground placeholder:text-muted-foreground focus:outline-none focus:border-foreground transition-colors" />
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Cart Totals & Payment -->
+                <div>
+                    <!-- Cart Totals -->
+                    <div class="mb-8">
+                        <div class="flex items-center gap-3 mb-8">
+                            <h2 class="section-title">
+                                CART <span class="text-muted-foreground">TOTALS</span>
+                            </h2>
+                            <span class="w-10 h-px bg-foreground"></span>
+                        </div>
+
+                        <div class="space-y-4">
+                            <div class="flex justify-between text-sm">
+                                <span class="text-muted-foreground">Subtotal</span>
+                                <span class="text-foreground">${{ subtotal.toFixed(2) }}</span>
+                            </div>
+
+                            <div class="border-t border-border"></div>
+
+                            <div class="flex justify-between text-sm">
+                                <span class="text-muted-foreground">Shipping Fee</span>
+                                <span class="text-foreground">${{ SHIPPING_FEE.toFixed(2) }}</span>
+                            </div>
+
+                            <div class="border-t border-border"></div>
+
+                            <div class="flex justify-between">
+                                <span class="font-medium text-foreground">Total</span>
+                                <span class="font-medium text-foreground">${{ total.toFixed(2) }}</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Payment Method -->
+                    <div>
+                        <div class="flex items-center gap-3 mb-6">
+                            <h2 class="text-sm font-medium text-foreground uppercase tracking-wider text-xs">
+                                Payment Method
+                            </h2>
+                            <span class="w-10 h-px bg-foreground"></span>
+                        </div>
+
+                        <div class="flex flex-wrap gap-4 mb-8">
+                            <button type="button" (click)="paymentMethod = 'stripe'"
+                                class="flex items-center gap-3 px-6 py-3 border transition-colors bg-background"
+                                [class.border-foreground]="paymentMethod === 'stripe'"
+                                [class.border-border]="paymentMethod !== 'stripe'">
+                                <div class="w-3 h-3 rounded-full border-2"
+                                    [class.bg-foreground]="paymentMethod === 'stripe'"
+                                    [class.border-foreground]="paymentMethod === 'stripe'"
+                                    [class.border-muted-foreground]="paymentMethod !== 'stripe'"></div>
+                                <span class="text-[10px] font-medium text-muted-foreground uppercase">Stripe</span>
+                            </button>
+
+                            <button type="button" (click)="paymentMethod = 'razorpay'"
+                                class="flex items-center gap-3 px-6 py-3 border transition-colors bg-background"
+                                [class.border-foreground]="paymentMethod === 'razorpay'"
+                                [class.border-border]="paymentMethod !== 'razorpay'">
+                                <div class="w-3 h-3 rounded-full border-2"
+                                    [class.bg-foreground]="paymentMethod === 'razorpay'"
+                                    [class.border-foreground]="paymentMethod === 'razorpay'"
+                                    [class.border-muted-foreground]="paymentMethod !== 'razorpay'"></div>
+                                <span class="text-[10px] font-medium text-muted-foreground uppercase">Razorpay</span>
+                            </button>
+
+                            <button type="button" (click)="paymentMethod = 'cod'"
+                                class="flex items-center gap-3 px-6 py-3 border transition-colors bg-background"
+                                [class.border-foreground]="paymentMethod === 'cod'"
+                                [class.border-border]="paymentMethod !== 'cod'">
+                                <div class="w-3 h-3 rounded-full border-2"
+                                    [class.bg-foreground]="paymentMethod === 'cod'"
+                                    [class.border-foreground]="paymentMethod === 'cod'"
+                                    [class.border-muted-foreground]="paymentMethod !== 'cod'"></div>
+                                <span class="text-[10px] font-medium text-muted-foreground uppercase">Cash on
+                                    Delivery</span>
+                            </button>
+                        </div>
+
+                        <button type="submit"
+                            class="w-full px-8 py-3 bg-black text-white text-xs font-medium uppercase tracking-widest hover:bg-gray-800 transition-colors">
+                            Place Order
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </main>
+</div>

@@ -1,86 +1,16 @@
 const mongoose = require('mongoose');
 
-const orderItemSchema = new mongoose.Schema({
-  product: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'Product',
-    required: true
-  },
-  name: {
-    type: String,
-    required: true
-  },
-  quantity: {
-    type: Number,
-    required: true,
-    min: 1,
-    default: 1
-  },
-  price: {
-    type: Number,
-    required: true
-  },
-  size: {
-    type: String,
-    required: true
-  },
-  image: {
-    type: String
-  }
-});
-
 const orderSchema = new mongoose.Schema({
-  orderNumber: {
-    type: String,
-    unique: true
-  },
-  userId: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'User',
-    required: true
-  },
-  items: [orderItemSchema],
-  totalAmount: {
-    type: Number,
-    required: true,
-    min: 0
-  },
-  status: {
-    type: String,
-    enum: ['Pending', 'Processing', 'Delivered', 'Cancelled'],
-    default: 'Pending'
-  },
-  paymentStatus: {
-    type: String,
-    enum: ['Pending', 'Paid', 'Refunded'],
-    default: 'Pending'
-  },
-  deliveryAddress: {
-    city: {
-      type: String,
-      required: [true, 'Please provide a city']
-    },
-    homeAddress: {
-      type: String,
-      required: [true, 'Please provide a home address']
-    },
-    phoneNumber: {
-      type: String,
-      required: [true, 'Please provide a contact number for delivery']
-    }
-  }
-}, {
-  timestamps: true
-});
+    userId: { type: String, required: true },
+    items: { type: Array, required: true },
+    amount: { type: Number, required: true },
+    address: { type: Object, required: true },
+    status: { type: String, default: 'Order Placed' },
+    paymentMethod: { type: String, required: true },
+    payment: { type: Boolean, default: false },
+    date: { type: Number, required: true }
+}, { timestamps: true });
 
-// Auto-generate order number before saving
-orderSchema.pre('save', function (next) {
-  if (!this.orderNumber) {
-    const timestamp = Date.now();
-    const random = Math.floor(Math.random() * 1000).toString().padStart(3, '0');
-    this.orderNumber = `ORD-${timestamp}-${random}`;
-  }
-  next();
-});
+const Order = mongoose.model('Order', orderSchema);
 
-module.exports = mongoose.model('Order', orderSchema);
+module.exports = Order;

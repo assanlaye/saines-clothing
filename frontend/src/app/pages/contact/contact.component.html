@@ -1,0 +1,50 @@
+<div class="min-h-screen bg-background">
+    <main class="container mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <!-- Breadcrumb -->
+        <div class="flex items-center gap-2 text-sm text-muted-foreground mb-8">
+            <span>HOME</span>
+            <lucide-icon [name]="ChevronRight" class="w-4 h-4"></lucide-icon>
+            <span class="text-foreground">CONTACT</span>
+        </div>
+
+        <!-- Title -->
+        <div class="flex items-center justify-center gap-3 mb-12">
+            <h1 class="section-title">
+                CONTACT <span class="text-muted-foreground">US</span>
+            </h1>
+            <span class="w-10 h-px bg-foreground"></span>
+        </div>
+
+        <!-- Contact Content -->
+        <div class="grid md:grid-cols-2 gap-12 mb-16">
+            <div>
+                <img src="assets/contact_img.png" alt="Contact Saine's Clothing" class="w-full object-cover" />
+            </div>
+            <div class="flex flex-col justify-center space-y-8">
+                <div>
+                    <h3 class="text-lg font-semibold text-foreground mb-4">Our Store</h3>
+                    <p class="text-muted-foreground leading-relaxed mb-2">
+                        54709 Willms Station<br />
+                        Suite 350, Washington, USA
+                    </p>
+                    <p class="text-muted-foreground">
+                        Tel: (415) 555-0132<br />
+                        Email: admin&#64;saineclothing.com
+                    </p>
+                </div>
+
+                <div>
+                    <h3 class="text-lg font-semibold text-foreground mb-4">Careers at Saine's Clothing</h3>
+                    <p class="text-muted-foreground leading-relaxed mb-4">
+                        Learn more about our teams and job openings.
+                    </p>
+                    <button
+                        class="px-8 py-3 border border-foreground text-foreground text-sm font-medium uppercase tracking-wider hover:bg-foreground hover:text-background transition-colors">
+                        Explore Jobs
+                    </button>
+                </div>
+            </div>
+        </div>
+    </main>
+    <app-newsletter></app-newsletter>
+</div>

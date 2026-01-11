@@ -1,28 +1,16 @@
 const express = require('express');
-const {
-  createOrder,
-  getAllOrders,
-  getOrderById,
-  updateOrderStatus,
-  deleteOrder,
-} = require('../controllers/orderController');
-const { protect } = require('../middleware/auth');
-const { authorize } = require('../middleware/roleAuth');
+const { placeOrder, userOrders, allOrders, updateStatus } = require('../controllers/orderController');
+const authUser = require('../middleware/auth');
+const adminAuth = require('../middleware/adminAuth');
 
-const router = express.Router();
+const orderRouter = express.Router();
 
-// All order routes are protected
-router.use(protect);
+// User Routes
+orderRouter.post('/place', authUser, placeOrder);
+orderRouter.post('/userorders', authUser, userOrders);
 
-router
-  .route('/')
-  .post(createOrder)
-  .get(getAllOrders);
+// Admin Routes
+orderRouter.get('/list', adminAuth, allOrders);
+orderRouter.post('/status', adminAuth, updateStatus);
 
-router
-  .route('/:id')
-  .get(getOrderById)
-  .put(authorize('admin'), updateOrderStatus)
-  .delete(authorize('admin'), deleteOrder);
-
-module.exports = router;
+module.exports = orderRouter;

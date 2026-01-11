@@ -1,0 +1,25 @@
+<section class="py-16">
+    <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+        <!-- Section Header -->
+        <div class="text-center mb-10">
+            <div class="flex items-center justify-center gap-3 mb-3">
+                <span class="w-10 h-px bg-muted-foreground"></span>
+                <h2 class="section-title">
+                    {{ titleParts.main }}
+                    <span class="text-muted-foreground">{{ titleParts.last }}</span>
+                </h2>
+                <span class="w-10 h-px bg-muted-foreground"></span>
+            </div>
+            <p *ngIf="subtitle" class="section-subtitle mx-auto">{{ subtitle }}</p>
+        </div>
+
+        <!-- Products Grid -->
+        <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 md:gap-6">
+            <div *ngFor="let product of products; let i = index" class="animate-fade-in"
+                [style.animation-delay]="(i * 0.1) + 's'">
+                <app-product-card [id]="product._id" [name]="product.name" [price]="product.price"
+                    [image]="product.image"></app-product-card>
+            </div>
+        </div>
+    </div>
+</section>

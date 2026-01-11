@@ -1,0 +1,39 @@
+# Node
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.npm
+.eslintcache
+
+# Angular
+.angular/
+dist/
+tmp/
+out-tsc/
+bazel-out/
+
+# Environment
+.env
+.env.local
+.env.*.local
+
+# IDEs
+.vscode/
+.idea/
+*.swp
+*.swo
+.DS_Store
+
+# Logs
+backend/backend.log
+frontend/frontend.log
+backend_start.log
+frontend_start.log
+seeding_atlas.log
+final_seeder.log
+seeder_log.txt
+server_log.txt
+check_db.js
+db_test.js
+test_output.js
