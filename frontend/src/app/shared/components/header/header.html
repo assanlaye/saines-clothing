@@ -56,7 +56,7 @@
             <img src="/assets/profile_icon.png" alt="Profile" />
           </a>
           <div class="dropdown">
-            <span class="username">{{ userName() }}</span>
+            <span class="username">{{ userName }}</span>
             <a routerLink="/profile" (click)="closeMenu()">Profile</a>
             @if (currentUser()?.role === 'admin') {
               <a routerLink="/admin" (click)="closeMenu()">Admin</a>

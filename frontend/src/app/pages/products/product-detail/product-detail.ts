@@ -180,5 +180,28 @@ export class ProductDetailComponent implements OnInit {
       ? product.images[0].url 
       : '/assets/p_img1.png';
   }
+
+  getColorCode(colorName: string): string {
+    // Basic color mapping - you can expand this
+    const colorMap: { [key: string]: string } = {
+      'White': '#ffffff',
+      'Black': '#000000',
+      'Red': '#ff0000',
+      'Blue': '#0000ff',
+      'Green': '#008000',
+      'Yellow': '#ffff00',
+      'Pink': '#ffc0cb',
+      'Purple': '#800080',
+      'Orange': '#ffa500',
+      'Grey': '#808080',
+      'Gray': '#808080',
+      'Navy': '#000080',
+      'Brown': '#a52a2a',
+      'Beige': '#f5f5dc',
+      'Khaki': '#f0e68c',
+      'Olive': '#808000'
+    };
+    return colorMap[colorName] || '#cccccc';
+  }
 }
 
