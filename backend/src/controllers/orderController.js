@@ -1,17 +1,17 @@
 const Order = require('../models/Order');
 const User = require('../models/User');
 
-// Place order using COD
+// Place order
 const placeOrder = async (req, res) => {
     try {
-        const { userId, items, amount, address } = req.body;
+        const { userId, items, amount, address, paymentMethod } = req.body;
 
         const orderData = {
             userId,
             items,
             address,
             amount,
-            paymentMethod: "COD",
+            paymentMethod: paymentMethod || "wave", // Default to 'wave' if not provided
             payment: false,
             date: Date.now()
         };

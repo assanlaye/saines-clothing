@@ -43,4 +43,8 @@ export class CartComponent implements OnInit {
     remove(productId: string, size: string) {
         this.cartService.removeFromCart(productId, size);
     }
+
+    getImageUrl(image: string | string[]): string {
+        return Array.isArray(image) ? (image[0] || '') : (image || '');
+    }
 }

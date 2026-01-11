@@ -23,7 +23,7 @@ export class ProductDetailComponent implements OnInit {
     selectedSize = '';
     selectedImage = 0;
     productImages: string[] = [];
-    sizes = ['S', 'M', 'L', 'XL', 'XXL'];
+    sizes: string[] = [];
 
     readonly ChevronRight = ChevronRight;
     readonly Star = Star;
@@ -44,7 +44,9 @@ export class ProductDetailComponent implements OnInit {
     }
 
     async loadProduct(id: string) {
+        console.log('Loading product with ID:', id);
         const product = await this.productService.getProductById(id);
+        console.log('Loaded product:', product);
         if (product) {
             this.product = product;
             // Handle both string and string[] image types
@@ -54,7 +56,11 @@ export class ProductDetailComponent implements OnInit {
                 // If it's a string, use it for all images (or fetch from backend)
                 this.productImages = product.image ? [product.image] : [];
             }
+            // Use product sizes if available, otherwise default
+            this.sizes = product.sizes && product.sizes.length > 0 ? product.sizes : ['S', 'M', 'L', 'XL', 'XXL'];
             this.loadRelatedProducts(product);
+        } else {
+            console.error('Product not found for ID:', id);
         }
     }
 

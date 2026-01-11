@@ -36,8 +36,16 @@ export class ProductService {
     }
 
     async getProductById(id: string): Promise<Product | undefined> {
-        const response: any = await lastValueFrom(this.http.get(`${this.apiUrl}/single/${id}`));
-        return response.success ? response.product : undefined;
+        try {
+            console.log('Fetching product by ID:', id, 'from:', `${this.apiUrl}/${id}`);
+            const response: any = await lastValueFrom(this.http.get(`${this.apiUrl}/${id}`));
+            console.log('Product response:', response);
+            // Backend returns product directly, not wrapped in {success, product}
+            return response._id ? response : undefined;
+        } catch (error) {
+            console.error('Error fetching product:', error);
+            return undefined;
+        }
     }
 
     async addProduct(productData: any): Promise<any> {

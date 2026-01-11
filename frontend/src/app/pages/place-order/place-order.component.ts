@@ -17,7 +17,7 @@ import { ToastService } from '../../services/toast.service';
 })
 export class PlaceOrderComponent implements OnInit {
     orderForm: FormGroup;
-    paymentMethod = 'cod';
+    paymentMethod = 'wave';
     subtotal = 0;
     total = 0;
     readonly SHIPPING_FEE = 10;
@@ -40,7 +40,7 @@ export class PlaceOrderComponent implements OnInit {
             state: ['', [Validators.required]],
             zipcode: ['', [Validators.required]],
             country: ['', [Validators.required]],
-            phone: ['', [Validators.required, Validators.pattern('^[0-9]{10,15}$')]]
+            phone: ['', [Validators.required, Validators.pattern('^[0-9]{7}$')]]
         });
     }
 

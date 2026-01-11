@@ -30,7 +30,7 @@
                     <div *ngFor="let item of cartItems" class="flex gap-4 py-4 border-t border-b border-border">
                         <!-- Product Image -->
                         <a [routerLink]="['/product', item._id]" class="w-20 h-24 flex-shrink-0">
-                            <img [src]="item.image" [alt]="item.name" class="w-full h-full object-cover" />
+                            <img [src]="getImageUrl(item.image)" [alt]="item.name" class="w-full h-full object-cover" />
                         </a>
 
                         <!-- Product Info -->
@@ -41,7 +41,7 @@
                                     {{ item.name }}
                                 </a>
                                 <div class="flex items-center gap-4 mt-2">
-                                    <span class="text-sm text-foreground">${{ item.price }}</span>
+                                    <span class="text-sm text-foreground">D{{ item.price }}</span>
                                     <span class="text-xs px-2 py-1 bg-secondary text-secondary-foreground">
                                         {{ item.size }}
                                     </span>
@@ -72,21 +72,21 @@
                         <div class="space-y-4">
                             <div class="flex justify-between text-sm">
                                 <span class="text-muted-foreground">Subtotal</span>
-                                <span class="text-foreground">${{ subtotal.toFixed(2) }}</span>
+                                <span class="text-foreground">D{{ subtotal.toFixed(2) }}</span>
                             </div>
 
                             <div class="border-t border-border"></div>
 
                             <div class="flex justify-between text-sm">
                                 <span class="text-muted-foreground">Shipping Fee</span>
-                                <span class="text-foreground">${{ SHIPPING_FEE.toFixed(2) }}</span>
+                                <span class="text-foreground">D{{ SHIPPING_FEE.toFixed(2) }}</span>
                             </div>
 
                             <div class="border-t border-border"></div>
 
                             <div class="flex justify-between">
                                 <span class="font-medium text-foreground">Total</span>
-                                <span class="font-medium text-foreground">${{ total.toFixed(2) }}</span>
+                                <span class="font-medium text-foreground">D{{ total.toFixed(2) }}</span>
                             </div>
                         </div>
 
