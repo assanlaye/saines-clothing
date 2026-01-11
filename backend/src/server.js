@@ -34,7 +34,29 @@ app.use((err, req, res, next) => {
 
 // Basic Route
 app.get('/', (req, res) => {
-    res.send('Saines Clothing API is running...');
+    res.json({
+        message: 'Saines Clothing API is running...',
+        version: '1.0.0',
+        endpoints: {
+            auth: {
+                register: 'POST /api/user/register',
+                login: 'POST /api/user/login'
+            },
+            products: {
+                list: 'GET /api/product',
+                getById: 'GET /api/product/:id',
+                add: 'POST /api/product/add (Admin)',
+                update: 'POST /api/product/update (Admin)',
+                remove: 'POST /api/product/remove (Admin)'
+            },
+            orders: {
+                place: 'POST /api/order/place (Auth)',
+                userOrders: 'POST /api/order/userorders (Auth)',
+                allOrders: 'GET /api/order/list (Admin)',
+                updateStatus: 'POST /api/order/status (Admin)'
+            }
+        }
+    });
 });
 
 const PORT = process.env.PORT || 5000;
