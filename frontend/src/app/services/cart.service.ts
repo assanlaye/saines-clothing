@@ -2,12 +2,9 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { Product } from '../models/product.model';
 
-export interface CartItem {
-    id: string;
-    name: string;
-    price: number;
+export interface CartItem extends Product {
     quantity: number;
-    size?: string;
+    size: string;
 }
 
 @Injectable({

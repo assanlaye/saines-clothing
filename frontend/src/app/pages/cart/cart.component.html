@@ -29,20 +29,19 @@
                 <div class="lg:col-span-2 space-y-4">
                     <div *ngFor="let item of cartItems" class="flex gap-4 py-4 border-t border-b border-border">
                         <!-- Product Image -->
-                        <a [routerLink]="['/product', item.product._id]" class="w-20 h-24 flex-shrink-0">
-                            <img [src]="item.product.image" [alt]="item.product.name"
-                                class="w-full h-full object-cover" />
+                        <a [routerLink]="['/product', item._id]" class="w-20 h-24 flex-shrink-0">
+                            <img [src]="item.image" [alt]="item.name" class="w-full h-full object-cover" />
                         </a>
 
                         <!-- Product Info -->
                         <div class="flex-1 flex flex-col justify-between">
                             <div>
-                                <a [routerLink]="['/product', item.product._id]"
+                                <a [routerLink]="['/product', item._id]"
                                     class="text-sm font-medium text-foreground hover:underline">
-                                    {{ item.product.name }}
+                                    {{ item.name }}
                                 </a>
                                 <div class="flex items-center gap-4 mt-2">
-                                    <span class="text-sm text-foreground">${{ item.product.price }}</span>
+                                    <span class="text-sm text-foreground">${{ item.price }}</span>
                                     <span class="text-xs px-2 py-1 bg-secondary text-secondary-foreground">
                                         {{ item.size }}
                                     </span>
@@ -52,13 +51,13 @@
                             <!-- Quantity -->
                             <div class="flex items-center gap-4 mt-3">
                                 <input type="number" min="1" [value]="item.quantity"
-                                    (change)="updateQuantity(item.product._id, item.size, $event)"
+                                    (change)="updateQuantity(item._id, item.size, $event)"
                                     class="w-16 px-2 py-1 border border-border text-center text-sm focus:outline-none focus:border-foreground" />
                             </div>
                         </div>
 
                         <!-- Delete Button -->
-                        <button (click)="remove(item.product._id, item.size)"
+                        <button (click)="remove(item._id, item.size)"
                             class="self-start p-2 text-muted-foreground hover:text-destructive transition-colors">
                             <lucide-icon [name]="Trash2" class="w-4 h-4"></lucide-icon>
                         </button>

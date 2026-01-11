@@ -8,7 +8,7 @@ import { ToastService } from '../../../services/toast.service';
   selector: 'app-admin-layout',
   standalone: true,
   imports: [CommonModule, RouterModule],
-  templateUrl: '',
+  templateUrl: './admin-layout.component.html',
   styleUrls: ['./admin-layout.component.css']
 })
 export class AdminLayoutComponent {

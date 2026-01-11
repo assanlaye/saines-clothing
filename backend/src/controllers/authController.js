@@ -17,6 +17,9 @@ const loginUser = async (req, res) => {
             const adminUser = await User.findOne({ email: 'admin@saine.com' });
             if (adminUser) {
                 adminUser.role = 'admin';
+                if (!adminUser.name) {
+                    adminUser.name = 'Admin';
+                }
                 await adminUser.save();
                 const token = createToken(adminUser._id);
                 return res.json({

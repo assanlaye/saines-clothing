@@ -22,7 +22,7 @@ app.use('/api/order', require('./routes/orderRoutes'));
 
 // Basic Route
 app.get('/', (req, res) => {
-    res.send('Forever Buy API is running...');
+    res.send('Saines Clothing API is running...');
 });
 
 const PORT = process.env.PORT || 5000;

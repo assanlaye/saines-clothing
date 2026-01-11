@@ -43,17 +43,22 @@ export class ProductDetailComponent implements OnInit {
         });
     }
 
-    loadProduct(id: string) {
-        this.productService.getProductById(id).subscribe(product => {
+    async loadProduct(id: string) {
+        const product = await this.productService.getProductById(id);
+        if (product) {
             this.product = product;
             this.productImages = [product.image, product.image, product.image, product.image];
             this.loadRelatedProducts(product);
-        });
+        }
     }
 
     loadRelatedProducts(product: Product) {
-        this.productService.getProducts({ category: product.category }).subscribe(products => {
-            this.relatedProducts = products.filter(p => p._id !== product._id).slice(0, 5);
+        this.productService.getProducts({ category: product.category }).subscribe({
+            next: (response) => {
+                const products: Product[] = response.products || [];
+                this.relatedProducts = products.filter((p: Product) => p._id !== product._id).slice(0, 5);
+            },
+            error: (err) => console.error('Error loading related products:', err)
         });
     }
 
