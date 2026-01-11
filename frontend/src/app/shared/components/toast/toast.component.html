@@ -1,14 +1,15 @@
 <div class="fixed top-20 right-4 z-[9999] space-y-3 pointer-events-none w-full max-w-sm">
     <div *ngFor="let toast of toasts" [ngClass]="getColorClass(toast.type)"
-        class="pointer-events-auto flex items-start gap-3 p-4 border rounded-lg shadow-lg transform transition-all duration-300 animate-in slide-in-from-right-full hover:scale-[1.02]">
+        class="pointer-events-auto flex items-start gap-3 p-4 border-2 rounded-none shadow-lg transform transition-all duration-300 ease-out animate-in slide-in-from-right-full hover:shadow-xl">
 
-        <lucide-icon [name]="getIcon(toast.type)" class="w-5 h-5 flex-shrink-0 mt-0.5"></lucide-icon>
+        <lucide-icon [name]="getIcon(toast.type)" [ngClass]="getIconColorClass(toast.type)" class="w-5 h-5 flex-shrink-0 mt-0.5"></lucide-icon>
 
-        <div class="flex-grow">
-            <p class="text-sm font-medium leading-tight">{{ toast.message }}</p>
+        <div class="flex-grow min-w-0">
+            <p class="text-sm font-medium text-foreground leading-tight break-words">{{ toast.message }}</p>
         </div>
 
-        <button (click)="remove(toast.id)" class="text-gray-400 hover:text-gray-600 transition-colors">
+        <button (click)="remove(toast.id)" 
+            class="flex-shrink-0 text-muted-foreground hover:text-foreground transition-colors p-1 rounded hover:bg-secondary">
             <lucide-icon [name]="X" class="w-4 h-4"></lucide-icon>
         </button>
     </div>

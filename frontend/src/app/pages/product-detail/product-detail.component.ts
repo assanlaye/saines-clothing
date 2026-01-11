@@ -4,6 +4,7 @@ import { ActivatedRoute, RouterModule } from '@angular/router';
 import { LucideAngularModule, ChevronRight, Star } from 'lucide-angular';
 import { ProductService } from '../../services/product.service';
 import { CartService } from '../../services/cart.service';
+import { ToastService } from '../../services/toast.service';
 import { Product } from '../../models/product.model';
 import { ProductGridComponent } from '../../shared/components/product-grid/product-grid.component';
 
@@ -31,7 +32,8 @@ export class ProductDetailComponent implements OnInit {
     constructor(
         private route: ActivatedRoute,
         private productService: ProductService,
-        private cartService: CartService
+        private cartService: CartService,
+        private toastService: ToastService
     ) { }
 
     ngOnInit(): void {
@@ -75,12 +77,12 @@ export class ProductDetailComponent implements OnInit {
 
     addToCart() {
         if (!this.selectedSize) {
-            alert('Please select a size');
+            this.toastService.warning('Please select a size');
             return;
         }
         if (this.product) {
             this.cartService.addToCart(this.product, this.selectedSize);
-            alert('Added to cart!');
+            this.toastService.success('Added to cart!');
         }
     }
 }

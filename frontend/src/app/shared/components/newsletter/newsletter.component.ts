@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { ToastService } from '../../../services/toast.service';
 
 @Component({
     selector: 'app-newsletter',
@@ -12,10 +13,11 @@ import { FormsModule } from '@angular/forms';
 export class NewsletterComponent {
     email: string = '';
 
+    constructor(private toastService: ToastService) { }
+
     handleSubmit() {
         console.log("Subscribed:", this.email);
         this.email = '';
-        // Show a toast or message
-        alert('Subscribed successfully!');
+        this.toastService.success('Subscribed successfully!');
     }
 }

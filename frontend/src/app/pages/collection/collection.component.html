@@ -6,6 +6,23 @@
             <lucide-icon [name]="ChevronRight" class="w-4 h-4"></lucide-icon>
             <span class="text-foreground">COLLECTION</span>
         </div>
+         <!-- Search Bar -->
+        <div class="relative mb-8 flex justify-center">
+            <input #searchInput type="text" [(ngModel)]="searchQuery" (keyup.enter)="applyFilters()"
+                placeholder="Search"
+                class="w-1/2 pl-4 pr-12 py-2 rounded-full border border-border bg-background text-foreground placeholder:text-muted-foreground focus:outline-none focus:border-foreground transition-colors" />
+            <button type="button" (click)="applyFilters()"
+                class="absolute right-[calc(25%+1rem)] top-1/2 -translate-y-1/2 p-1.5 hover:bg-secondary rounded-full transition-colors">
+                <lucide-icon [name]="Search"
+                    class="w-5 h-5 text-foreground"></lucide-icon>
+            </button>
+            <button type="button" (click)="closeSearchBar()"
+                class="absolute right-[calc(25%-2rem)] top-1/2 -translate-y-1/2 p-1.5 hover:bg-secondary rounded-full transition-colors">
+                <lucide-icon [name]="X"
+                    class="w-5 h-5 text-foreground"></lucide-icon>
+            </button>
+        </div>
+
 
         <div class="flex flex-col lg:flex-row gap-8">
             <!-- Sidebar Filters -->
@@ -80,20 +97,7 @@
                     </div>
                 </div>
 
-                <!-- Search Bar -->
-                <div class="relative mb-8">
-                    <lucide-icon [name]="Search"
-                        class="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground"></lucide-icon>
-                    <input type="text" [(ngModel)]="searchQuery" (ngModelChange)="applyFilters()"
-                        placeholder="Search products..."
-                        class="w-full pl-12 pr-4 py-3 border border-border bg-background text-foreground placeholder:text-muted-foreground focus:outline-none focus:border-foreground transition-colors" />
-                    <button *ngIf="searchQuery" (click)="searchQuery = ''; applyFilters()"
-                        class="absolute right-4 top-1/2 -translate-y-1/2">
-                        <lucide-icon [name]="X"
-                            class="w-4 h-4 text-muted-foreground hover:text-foreground"></lucide-icon>
-                    </button>
-                </div>
-
+               
                 <!-- Products Grid -->
                 <div *ngIf="filteredProducts.length > 0; else noProducts"
                     class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6">

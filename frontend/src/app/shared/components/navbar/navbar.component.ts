@@ -65,4 +65,19 @@ export class NavbarComponent implements OnInit {
         this.isProfileOpen = false;
         this.router.navigate(['/login']);
     }
+
+    navigateToSearch() {
+        // Navigate to collection page with focus parameter
+        if (this.router.url === '/collection') {
+            // If already on collection page, trigger focus event
+            window.dispatchEvent(new CustomEvent('focusSearch'));
+        } else {
+            // Navigate to collection and trigger focus
+            this.router.navigate(['/collection'], { queryParams: { focus: 'search' } }).then(() => {
+                setTimeout(() => {
+                    window.dispatchEvent(new CustomEvent('focusSearch'));
+                }, 100);
+            });
+        }
+    }
 }

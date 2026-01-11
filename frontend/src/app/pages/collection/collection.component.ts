@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, AfterViewInit, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterModule } from '@angular/router';
+import { RouterModule, ActivatedRoute } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { LucideAngularModule, ChevronRight, Search, SlidersHorizontal, X } from 'lucide-angular';
 import { ProductService } from '../../services/product.service';
@@ -20,7 +20,9 @@ import { ProductCardComponent } from '../../shared/components/product-card/produ
     templateUrl: './collection.component.html',
     styleUrls: ['./collection.component.css']
 })
-export class CollectionComponent implements OnInit {
+export class CollectionComponent implements OnInit, AfterViewInit, OnDestroy {
+    @ViewChild('searchInput') searchInput!: ElementRef<HTMLInputElement>;
+    
     showFilter = false;
     searchQuery = '';
     sortBy = 'relevant';
@@ -38,9 +40,23 @@ export class CollectionComponent implements OnInit {
     readonly SlidersHorizontal = SlidersHorizontal;
     readonly X = X;
 
-    constructor(private productService: ProductService) { }
+    private focusSearchListener?: () => void;
+
+    searchVisible: boolean = true;
+
+    constructor(
+        private productService: ProductService,
+        private route: ActivatedRoute
+    ) { }
 
     ngOnInit(): void {
+        // Check if we should focus search from query params
+        this.route.queryParams.subscribe(params => {
+            if (params['focus'] === 'search') {
+                setTimeout(() => this.focusSearchInput(), 200);
+            }
+        });
+
         this.productService.getProducts().subscribe({
             next: (products: Product[]) => {
                 console.log('Products received in CollectionComponent:', products);
@@ -54,6 +70,26 @@ export class CollectionComponent implements OnInit {
                 this.filteredProducts = [];
             }
         });
+    }
+
+    ngAfterViewInit(): void {
+        // Listen for focus search event from navbar
+        this.focusSearchListener = () => {
+            this.focusSearchInput();
+        };
+        window.addEventListener('focusSearch', this.focusSearchListener);
+    }
+
+    ngOnDestroy(): void {
+        if (this.focusSearchListener) {
+            window.removeEventListener('focusSearch', this.focusSearchListener);
+        }
+    }
+
+    focusSearchInput(): void {
+        if (this.searchInput && this.searchInput.nativeElement) {
+            this.searchInput.nativeElement.focus();
+        }
     }
 
     toggleCategory(category: string) {
@@ -74,13 +110,19 @@ export class CollectionComponent implements OnInit {
         this.applyFilters();
     }
 
+    closeSearchBar(): void {
+        this.searchVisible = false;
+    }
+
     applyFilters() {
         let result = [...this.allProducts];
 
         // Filter by search query
-        if (this.searchQuery) {
+        if (this.searchQuery && this.searchQuery.trim()) {
+            const query = this.searchQuery.toLowerCase().trim();
             result = result.filter(p =>
-                p.name.toLowerCase().includes(this.searchQuery.toLowerCase())
+                p.name.toLowerCase().includes(query) ||
+                (p.description && p.description.toLowerCase().includes(query))
             );
         }
 

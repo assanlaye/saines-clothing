@@ -40,12 +40,21 @@ export class ToastComponent implements OnInit {
         }
     }
 
+    getIconColorClass(type: string) {
+        switch (type) {
+            case 'success': return 'text-green-600';
+            case 'error': return 'text-red-600';
+            case 'warning': return 'text-yellow-600';
+            default: return 'text-blue-600';
+        }
+    }
+
     getColorClass(type: string) {
         switch (type) {
-            case 'success': return 'bg-green-50 text-green-800 border-green-200';
-            case 'error': return 'bg-red-50 text-red-800 border-red-200';
-            case 'warning': return 'bg-yellow-50 text-yellow-800 border-yellow-200';
-            default: return 'bg-blue-50 text-blue-800 border-blue-200';
+            case 'success': return 'bg-white text-foreground border-green-500';
+            case 'error': return 'bg-white text-foreground border-red-500';
+            case 'warning': return 'bg-white text-foreground border-yellow-500';
+            default: return 'bg-white text-foreground border-blue-500';
         }
     }
 }
