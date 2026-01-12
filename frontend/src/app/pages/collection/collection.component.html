@@ -8,7 +8,7 @@
         </div>
          <!-- Search Bar -->
         <div class="relative mb-8 flex justify-center">
-            <input #searchInput type="text" [(ngModel)]="searchQuery" (keyup.enter)="applyFilters()"
+            <input #searchInput type="text" [(ngModel)]="searchQuery" (input)="applyFilters()"
                 placeholder="Search"
                 class="w-1/2 pl-4 pr-12 py-2 rounded-full border border-border bg-background text-foreground placeholder:text-muted-foreground focus:outline-none focus:border-foreground transition-colors" />
             <button type="button" (click)="applyFilters()"

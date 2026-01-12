@@ -1,8 +1,0 @@
-{
-  "buildCommand": "cd frontend && npm run build",
-  "outputDirectory": "frontend/dist/frontend",
-  "rewrites": [
-    { "source": "/api/(.*)", "destination": "https://saines-clothing.onrender.com/api/$1" },
-    { "source": "(.*)", "destination": "/index.html" }
-  ]
-}

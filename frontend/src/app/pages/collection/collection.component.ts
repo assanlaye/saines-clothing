@@ -112,6 +112,8 @@ export class CollectionComponent implements OnInit, AfterViewInit, OnDestroy {
 
     closeSearchBar(): void {
         this.searchVisible = false;
+        this.searchQuery = ''; // Clear the search query when closing the search bar
+        this.applyFilters(); // Reapply filters to reset the product list
     }
 
     applyFilters() {

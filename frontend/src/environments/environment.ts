@@ -1,4 +1,4 @@
 export const environment = {
     production: true,
-    apiUrl: 'https://saines-clothing.onrender.com'
+    apiUrl: 'http://localhost:4000/api'
 };
