@@ -20,7 +20,7 @@ export class PlaceOrderComponent implements OnInit {
     paymentMethod = 'wave';
     subtotal = 0;
     total = 0;
-    readonly SHIPPING_FEE = 10;
+    readonly DELIVERY_FEE = 10;
     readonly ChevronRight = ChevronRight;
     
     regions = [
@@ -59,7 +59,7 @@ export class PlaceOrderComponent implements OnInit {
 
     calculateTotals() {
         this.subtotal = this.cartService.getCartTotal();
-        this.total = this.subtotal > 0 ? this.subtotal + this.SHIPPING_FEE : 0;
+        this.total = this.subtotal > 0 ? this.subtotal + this.DELIVERY_FEE : 0;
     }
 
     async handleSubmit() {

@@ -23,6 +23,8 @@ export class AppComponent implements OnInit {
         this.router.events.pipe(
             filter(event => event instanceof NavigationEnd)
         ).subscribe((event: any) => {
+            // Reset scroll position when navigating to a new route
+            try { window.scrollTo({ top: 0, left: 0 }); } catch (e) { /* ignore in non-browser env */ }
             this.isAdminRoute = event.url.startsWith('/admin');
         });
     }

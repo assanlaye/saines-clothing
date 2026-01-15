@@ -12,6 +12,15 @@ import { ToastService } from '../../../services/toast.service';
   styleUrls: ['./admin-layout.component.css']
 })
 export class AdminLayoutComponent {
+  isSidebarOpen = false;
+
+  toggleSidebar() {
+    this.isSidebarOpen = !this.isSidebarOpen;
+  }
+
+  closeSidebar() {
+    this.isSidebarOpen = false;
+  }
   constructor(
     private authService: AuthService,
     private toastService: ToastService,

@@ -16,7 +16,7 @@ export class CartComponent implements OnInit {
     cartItems: CartItem[] = [];
     subtotal = 0;
     total = 0;
-    readonly SHIPPING_FEE = 10;
+    readonly DELIVERY_FEE = 10;
 
     readonly ChevronRight = ChevronRight;
     readonly Trash2 = Trash2;
@@ -32,7 +32,7 @@ export class CartComponent implements OnInit {
 
     calculateTotals() {
         this.subtotal = this.cartService.getCartTotal();
-        this.total = this.subtotal > 0 ? this.subtotal + this.SHIPPING_FEE : 0;
+        this.total = this.subtotal > 0 ? this.subtotal + this.DELIVERY_FEE : 0;
     }
 
     updateQuantity(productId: string, size: string, event: any) {

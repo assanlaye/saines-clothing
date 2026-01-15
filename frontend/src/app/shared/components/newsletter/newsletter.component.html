@@ -7,12 +7,12 @@
             <p class="text-muted-foreground text-sm mb-6">
                 Be the first to know about new drops, exclusive offers, and style inspiration.
             </p>
-            <form (ngSubmit)="handleSubmit()" #newsletterForm="ngForm" class="flex gap-0">
+            <form (ngSubmit)="handleSubmit()" #newsletterForm="ngForm" class="flex flex-col sm:flex-row items-stretch gap-2">
                 <input type="email" name="email" [(ngModel)]="email" placeholder="Enter your email"
-                    class="flex-1 px-4 py-3 bg-background border border-border text-foreground placeholder:text-muted-foreground focus:outline-none focus:border-foreground transition-colors"
+                    class="flex-1 min-w-0 w-full px-4 py-3 sm:h-12 bg-background border border-border text-foreground placeholder:text-muted-foreground focus:outline-none focus:border-foreground transition-colors"
                     required />
                 <button type="submit"
-                    class="px-8 py-3 bg-primary text-primary-foreground text-sm font-medium uppercase tracking-wider hover:bg-primary/90 transition-colors"
+                    class="w-full sm:w-auto h-full sm:h-12 px-6 py-3 bg-primary text-primary-foreground text-sm font-medium uppercase tracking-wider hover:bg-primary/90 transition-colors mt-2 sm:mt-0 leading-none"
                     [disabled]="!newsletterForm.form.valid">
                     Subscribe
                 </button>

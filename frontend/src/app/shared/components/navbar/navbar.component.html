@@ -3,7 +3,7 @@
     <div class="flex items-center justify-between h-16">
       <!-- Logo -->
       <a routerLink="/" class="flex items-center gap-2">
-        <img src="assets/saine-clothing_logo.svg" alt="Saine's Clothing Logo" class="w-28 object-contain" />
+        <img src="assets/saine-clothing_logo.svg" alt="Saine's Clothing Logo" class="w-20 sm:w-28 object-contain" />
       </a>
 
       <!-- Desktop Navigation -->
@@ -35,7 +35,7 @@
               class="block px-4 py-2 text-sm text-gray-600 hover:bg-gray-50 hover:text-foreground transition-colors border-b border-gray-100 font-semibold">
               Admin Panel
             </a>
-            <a routerLink="/orders" (click)="isProfileOpen = false"
+            <a *ngIf="!isAdmin" routerLink="/orders" (click)="isProfileOpen = false"
               class="block px-4 py-2 text-sm text-gray-600 hover:bg-gray-50 hover:text-foreground transition-colors">
               Orders
             </a>

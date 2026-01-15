@@ -87,9 +87,13 @@ export class CollectionComponent implements OnInit, AfterViewInit, OnDestroy {
     }
 
     focusSearchInput(): void {
-        if (this.searchInput && this.searchInput.nativeElement) {
-            this.searchInput.nativeElement.focus();
-        }
+        // Ensure the search bar is visible before focusing the input
+        this.searchVisible = true;
+        setTimeout(() => {
+            if (this.searchInput && this.searchInput.nativeElement) {
+                this.searchInput.nativeElement.focus();
+            }
+        }, 50);
     }
 
     toggleCategory(category: string) {

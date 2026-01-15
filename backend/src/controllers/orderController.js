@@ -6,6 +6,12 @@ const placeOrder = async (req, res) => {
     try {
         const { userId, items, amount, address, paymentMethod } = req.body;
 
+        // Prevent admins from placing orders
+        const requestingUser = await User.findById(userId);
+        if (requestingUser && requestingUser.role === 'admin') {
+            return res.status(403).json({ success: false, message: 'Admins are not allowed to place orders' });
+        }
+
         // Generate unique order number
         const orderCount = await Order.countDocuments();
         const orderNumber = `ORD-${Date.now()}-${orderCount + 1}`;
